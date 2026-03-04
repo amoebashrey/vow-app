@@ -1,0 +1,62 @@
+import Link from "next/link";
+import { ContractStatusBadge } from "./ContractStatusBadge";
+
+interface ParticipantSummary {
+  role: "creator" | "partner";
+  accepted: boolean;
+}
+
+export interface ContractSummary {
+  id: string;
+  goal_text: string;
+  deadline: string;
+  penalty_amount: number;
+  status: "active" | "completed" | "failed";
+  participants: ParticipantSummary[];
+}
+
+interface ContractCardProps {
+  contract: ContractSummary;
+}
+
+function daysRemaining(deadline: string) {
+  const today = new Date();
+  const end = new Date(deadline);
+  const diffMs = end.getTime() - today.setHours(0, 0, 0, 0);
+  return Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+}
+
+export function ContractCard({ contract }: ContractCardProps) {
+  const remaining = daysRemaining(contract.deadline);
+  const pastDue = remaining < 0;
+  const pendingPartner = contract.participants.some(
+    (p) => p.role === "partner" && !p.accepted
+  );
+
+  return (
+    <Link href={`/contracts/${contract.id}`}>
+      <article className="group border-2 border-black bg-white p-6 text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-transform group-hover:-translate-y-0.5">
+        <div className="mb-3 flex items-center justify-between gap-2">
+          <ContractStatusBadge status={contract.status} />
+          {pendingPartner && (
+            <span className="text-[10px] font-black uppercase tracking-[0.18em] text-amber-600">
+              Pending Acceptance
+            </span>
+          )}
+        </div>
+        <p className="mb-3 line-clamp-2 text-sm font-semibold">
+          {contract.goal_text}
+        </p>
+        <p className="mb-2 text-xs uppercase text-zinc-600">
+          {pastDue
+            ? "Deadline passed. Awaiting resolution."
+            : `${remaining} Days Remaining. Execute.`}
+        </p>
+        <p className="text-xs font-semibold uppercase text-zinc-800">
+          Penalty: <span className="font-black">₹{contract.penalty_amount}</span>
+        </p>
+      </article>
+    </Link>
+  );
+}
+
