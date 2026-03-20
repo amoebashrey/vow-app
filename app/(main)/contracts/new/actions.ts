@@ -1,7 +1,7 @@
 'use server';
 
 import { redirect } from 'next/navigation';
-import { createSupabaseServerClient } from '../../../lib/supabase/server';
+import { createSupabaseServerClient } from '../../../../lib/supabase/server';
 
 export async function createContract(formData: FormData) {
   const goalText = String(formData.get('goal_text') || '').trim();

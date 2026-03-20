@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
-import { createSupabaseServerClient } from "../../../lib/supabase/server";
-import { CreateContractForm } from "../../../components/contracts/CreateContractForm";
+import { createSupabaseServerClient } from "../../../../lib/supabase/server";
+import { CreateContractForm } from "../../../../components/contracts/CreateContractForm";
 
 export default async function NewContractPage() {
   const supabase = createSupabaseServerClient();

@@ -1,7 +1,7 @@
 "use client";
 
 import { useTransition, useState } from "react";
-import { createContract } from "../../app/contracts/new/actions";
+import { createContract } from "../../app/(main)/contracts/new/actions";
 
 export function CreateContractForm() {
   const [error, setError] = useState<string | null>(null);

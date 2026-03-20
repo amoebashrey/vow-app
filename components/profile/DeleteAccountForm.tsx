@@ -1,7 +1,7 @@
 "use client";
 
 import { useTransition, useState } from "react";
-import { deleteAccount } from "../../app/profile/actions";
+import { deleteAccount } from "../../app/(main)/profile/actions";
 
 export function DeleteAccountForm() {
   const [confirm, setConfirm] = useState("");

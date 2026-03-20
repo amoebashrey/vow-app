@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
-import { createSupabaseServerClient } from "../../../../lib/supabase/server";
-import { AcceptContractForm } from "../../../../components/contracts/AcceptContractForm";
+import { createSupabaseServerClient } from "../../../../../lib/supabase/server";
+import { AcceptContractForm } from "../../../../../components/contracts/AcceptContractForm";
 
 interface AcceptPageProps {
   params: { id: string };

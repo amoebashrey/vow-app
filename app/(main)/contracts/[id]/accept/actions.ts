@@ -1,7 +1,7 @@
 'use server';
 
 import { redirect } from 'next/navigation';
-import { createSupabaseServerClient } from '../../../../lib/supabase/server';
+import { createSupabaseServerClient } from '../../../../../lib/supabase/server';
 
 export async function acceptContract(contractId: string) {
   const supabase = createSupabaseServerClient();

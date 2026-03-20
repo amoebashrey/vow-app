@@ -1,8 +1,8 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { createSupabaseServerClient } from "../../../lib/supabase/server";
-import { ResolveContractForm } from "../../../components/contracts/ResolveContractForm";
-import { ContractStatusBadge } from "../../../components/contracts/ContractStatusBadge";
+import { createSupabaseServerClient } from "../../../../lib/supabase/server";
+import { ResolveContractForm } from "../../../../components/contracts/ResolveContractForm";
+import { ContractStatusBadge } from "../../../../components/contracts/ContractStatusBadge";
 
 interface ContractDetailPageProps {
   params: { id: string };

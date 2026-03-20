@@ -2,8 +2,8 @@
 
 import { useState, useTransition } from "react";
 import { updatePassword } from "./actions";
-import { Input } from "../../components/ui/Input";
-import { Button } from "../../components/ui/Button";
+import { Input } from "../../../components/ui/Input";
+import { Button } from "../../../components/ui/Button";
 
 export default function UpdatePasswordPage() {
   const [error, setError] = useState<string | null>(null);

@@ -1,7 +1,7 @@
 "use client";
 
 import { useTransition, useState } from "react";
-import { acceptContract } from "../../app/contracts/[id]/accept/actions";
+import { acceptContract } from "../../app/(main)/contracts/[id]/accept/actions";
 
 interface AcceptContractFormProps {
   contractId: string;

@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
-import { createSupabaseServerClient } from "../../lib/supabase/server";
-import { UpdateDisplayNameForm } from "../../components/profile/UpdateDisplayNameForm";
-import { DeleteAccountForm } from "../../components/profile/DeleteAccountForm";
+import { createSupabaseServerClient } from "../../../lib/supabase/server";
+import { UpdateDisplayNameForm } from "../../../components/profile/UpdateDisplayNameForm";
+import { DeleteAccountForm } from "../../../components/profile/DeleteAccountForm";
 
 interface ProfilePageProps {
   searchParams: { updated?: string };

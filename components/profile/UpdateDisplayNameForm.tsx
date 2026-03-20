@@ -1,7 +1,7 @@
 "use client";
 
 import { useTransition, useState } from "react";
-import { updateDisplayName } from "../../app/profile/actions";
+import { updateDisplayName } from "../../app/(main)/profile/actions";
 
 interface UpdateDisplayNameFormProps {
   displayName: string | null;

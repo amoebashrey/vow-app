@@ -2,7 +2,7 @@
 
 import { redirect } from 'next/navigation';
 import { createClient } from '@supabase/supabase-js';
-import { createSupabaseServerClient } from '../../lib/supabase/server';
+import { createSupabaseServerClient } from '../../../lib/supabase/server';
 
 export async function updateDisplayName(formData: FormData) {
   const display_name = String(formData.get('display_name') || '').trim();

@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { createSupabaseServerClient } from "../../lib/supabase/server";
+import { createSupabaseServerClient } from "../../../lib/supabase/server";
 import {
   ContractCard,
   type ContractSummary
-} from "../../components/contracts/ContractCard";
-import { Button } from "../../components/ui/Button";
+} from "../../../components/contracts/ContractCard";
+import { Button } from "../../../components/ui/Button";
 
 export default async function DashboardPage() {
   const supabase = createSupabaseServerClient();

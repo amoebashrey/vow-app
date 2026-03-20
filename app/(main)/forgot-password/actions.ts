@@ -1,6 +1,6 @@
 'use server';
 
-import { createSupabaseServerClient } from '../../lib/supabase/server';
+import { createSupabaseServerClient } from '../../../lib/supabase/server';
 
 export async function sendPasswordReset(formData: FormData) {
   const email = String(formData.get('email') || '').trim();
