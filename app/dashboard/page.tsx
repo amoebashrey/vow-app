@@ -81,6 +81,25 @@ export default async function DashboardPage() {
               {" · "}
               {summaries.filter((c) => c.status === "failed").length} Failed
             </p>
+            {(() => {
+              const overdue = summaries.filter(
+                (c) => c.status === "active" && new Date(c.deadline) < new Date()
+              );
+              if (overdue.length === 0) return null;
+              return (
+                <div className="flex items-center justify-between rounded-lg border border-[#EFFF00]/10 bg-[#EFFF00]/[0.04] px-4 py-3">
+                  <p className="text-[11px] uppercase tracking-widest text-zinc-400">
+                    {overdue.length} contract{overdue.length > 1 ? "s" : ""} awaiting resolution.
+                  </p>
+                  <Link
+                    href={`/contracts/${overdue[0].id}`}
+                    className="text-[11px] font-bold uppercase tracking-widest text-[#EFFF00]"
+                  >
+                    Resolve →
+                  </Link>
+                </div>
+              );
+            })()}
             <div className="grid gap-4 md:grid-cols-2">
               {summaries.map((c) => (
                 <ContractCard

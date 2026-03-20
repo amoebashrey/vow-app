@@ -8,14 +8,14 @@ export function ContractStatusBadge({ status }: ContractStatusBadgeProps) {
 
   const colorClasses =
     status === "active"
-      ? "border-emerald-400 text-emerald-300"
+      ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-300"
       : status === "completed"
-        ? "border-sky-400 text-sky-300"
-        : "border-red-500 text-red-400";
+        ? "bg-zinc-500/10 border-zinc-500/20 text-zinc-300"
+        : "bg-red-500/10 border-red-500/30 text-red-400";
 
   return (
     <span
-      className={`inline-block border px-2 py-1 text-[10px] font-black uppercase tracking-[0.18em] ${colorClasses}`}
+      className={`inline-block rounded-full border px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] ${colorClasses}`}
     >
       {label}
     </span>

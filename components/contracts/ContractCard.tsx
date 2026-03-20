@@ -33,16 +33,13 @@ export function ContractCard({ contract }: ContractCardProps) {
     (p) => p.role === "partner" && !p.accepted
   );
 
-  const borderAccent =
-    contract.status === "failed"
-      ? "border-l-4 border-l-red-500"
-      : pastDue && contract.status === "active"
-        ? "border-l-4 border-l-amber-500"
-        : "";
+  const bloomColor =
+    contract.status === "failed" ? "bg-red-500/[0.06]" : "bg-[#EFFF00]/[0.06]";
 
   return (
     <Link href={`/contracts/${contract.id}`}>
-      <article className={`group border-2 border-zinc-700 bg-zinc-900 p-6 text-white shadow-[4px_4px_0px_0px_rgba(255,255,255,0.05)] transition-all group-hover:-translate-y-0.5 group-hover:border-l-4 group-hover:border-l-[#EFFF00] ${borderAccent}`}>
+      <article className="relative overflow-hidden bg-white/[0.03] border border-white/[0.08] rounded-xl p-5 text-white transition-all hover:-translate-y-0.5 hover:border-white/[0.15]">
+        <div className={`pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full ${bloomColor}`} />
         <div className="mb-3 flex items-center justify-between gap-2">
           <ContractStatusBadge status={contract.status} />
           {pendingPartner && (
@@ -59,11 +56,11 @@ export function ContractCard({ contract }: ContractCardProps) {
             ? "Deadline passed. Awaiting resolution."
             : `${remaining} Days Remaining. Execute.`}
         </p>
+        <div className="my-3 h-px bg-white/[0.06]" />
         <p className="text-xs font-semibold uppercase text-zinc-400">
-          Penalty: <span className="font-black text-[#EFFF00]">₹{contract.penalty_amount}</span>
+          Penalty: <span className="text-base font-black text-[#EFFF00]">₹{contract.penalty_amount}</span>
         </p>
       </article>
     </Link>
   );
 }
-
