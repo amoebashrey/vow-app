@@ -116,6 +116,12 @@ export default function LoginPage() {
             {isPending ? "Entering..." : "Login"}
           </button>
         </form>
+        <a
+          href="/onboarding"
+          className="mt-4 block text-center text-[10px] uppercase tracking-widest text-zinc-500 hover:text-zinc-300"
+        >
+          New here? See what VOW is →
+        </a>
       </div>
     </div>
   );

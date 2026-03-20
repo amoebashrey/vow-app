@@ -52,7 +52,7 @@ export default function OnboardingPage() {
 
   useEffect(() => {
     if (localStorage.getItem("vow_onboarded")) {
-      router.replace("/dashboard");
+      router.replace("/signup");
     } else {
       setReady(true);
     }
