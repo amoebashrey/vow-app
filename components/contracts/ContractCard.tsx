@@ -33,9 +33,16 @@ export function ContractCard({ contract }: ContractCardProps) {
     (p) => p.role === "partner" && !p.accepted
   );
 
+  const borderAccent =
+    contract.status === "failed"
+      ? "border-l-4 border-l-red-500"
+      : pastDue && contract.status === "active"
+        ? "border-l-4 border-l-amber-500"
+        : "";
+
   return (
     <Link href={`/contracts/${contract.id}`}>
-      <article className="group border-2 border-zinc-700 bg-zinc-900 p-6 text-white shadow-[4px_4px_0px_0px_rgba(255,255,255,0.05)] transition-all group-hover:-translate-y-0.5 group-hover:border-l-4 group-hover:border-l-[#EFFF00]">
+      <article className={`group border-2 border-zinc-700 bg-zinc-900 p-6 text-white shadow-[4px_4px_0px_0px_rgba(255,255,255,0.05)] transition-all group-hover:-translate-y-0.5 group-hover:border-l-4 group-hover:border-l-[#EFFF00] ${borderAccent}`}>
         <div className="mb-3 flex items-center justify-between gap-2">
           <ContractStatusBadge status={contract.status} />
           {pendingPartner && (
@@ -44,7 +51,7 @@ export function ContractCard({ contract }: ContractCardProps) {
             </span>
           )}
         </div>
-        <p className="mb-3 line-clamp-2 text-sm font-semibold">
+        <p className="mb-3 line-clamp-2 text-sm font-semibold uppercase">
           {contract.goal_text}
         </p>
         <p className="mb-2 text-xs uppercase text-zinc-400">
