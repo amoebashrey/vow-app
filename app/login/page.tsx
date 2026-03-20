@@ -74,6 +74,12 @@ export default function LoginPage() {
               required
               className="mt-1 w-full border-b-2 border-black bg-transparent px-0 py-2 text-sm outline-none"
             />
+            <a
+              href="/forgot-password"
+              className="mt-1 inline-block text-[10px] uppercase tracking-widest text-zinc-500 hover:text-zinc-300"
+            >
+              Forgot your password?
+            </a>
           </div>
           {message === "confirm_email" && (
             <p className="text-xs font-semibold uppercase text-emerald-700">

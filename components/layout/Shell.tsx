@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ReactNode } from "react";
 import { createSupabaseServerClient } from "../../lib/supabase/server";
+import { NavDropdown } from "./NavDropdown";
 
 interface ShellProps {
   children: ReactNode;
@@ -37,6 +38,10 @@ export async function Shell({ children }: ShellProps) {
                 >
                   New Contract
                 </Link>
+                <NavDropdown
+                  userEmail={user.email!}
+                  userInitial={user.email![0].toUpperCase()}
+                />
               </>
             )}
             {!user && (
