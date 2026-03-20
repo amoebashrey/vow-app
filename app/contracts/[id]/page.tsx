@@ -125,6 +125,14 @@ export default async function ContractDetailPage({
               <p className="mt-2 text-xs text-emerald-700">
                 They must sign in with the email you used ({contract.partner_email}).
               </p>
+              <a
+                href={`https://wa.me/?text=${encodeURIComponent(`I've made a VOW. Hold me accountable: ${acceptUrl}`)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 inline-block border-2 border-emerald-700 bg-emerald-600 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white transition-all hover:bg-emerald-700"
+              >
+                Share on WhatsApp.
+              </a>
             </div>
           );
         })()}

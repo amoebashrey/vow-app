@@ -1,9 +1,11 @@
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "../../lib/supabase/server";
 import {
   ContractCard,
   type ContractSummary
 } from "../../components/contracts/ContractCard";
+import { Button } from "../../components/ui/Button";
 
 export default async function DashboardPage() {
   const supabase = createSupabaseServerClient();
@@ -61,18 +63,33 @@ export default async function DashboardPage() {
       </div>
       <div className="mx-auto max-w-4xl space-y-4">
         {summaries.length === 0 ? (
-          <p className="text-sm text-zinc-400">
-            No contracts yet. Make a commitment that actually costs you.
-          </p>
-        ) : (
-          <div className="grid gap-4 md:grid-cols-2">
-            {summaries.map((c) => (
-              <ContractCard
-                key={c.id}
-                contract={c}
-              />
-            ))}
+          <div className="flex flex-col items-center justify-center py-20 text-center">
+            <h2 className="text-4xl font-black uppercase">No Vows Yet.</h2>
+            <p className="mt-2 text-xs uppercase tracking-widest text-zinc-500">
+              Your word means nothing until you put it on the line.
+            </p>
+            <Link href="/contracts/new" className="mt-6">
+              <Button>Make Your First Vow.</Button>
+            </Link>
           </div>
+        ) : (
+          <>
+            <p className="text-[10px] font-semibold uppercase tracking-widest text-zinc-500">
+              {summaries.filter((c) => c.status === "active").length} Active
+              {" · "}
+              {summaries.filter((c) => c.status === "completed").length} Completed
+              {" · "}
+              {summaries.filter((c) => c.status === "failed").length} Failed
+            </p>
+            <div className="grid gap-4 md:grid-cols-2">
+              {summaries.map((c) => (
+                <ContractCard
+                  key={c.id}
+                  contract={c}
+                />
+              ))}
+            </div>
+          </>
         )}
       </div>
     </div>

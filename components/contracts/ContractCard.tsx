@@ -35,7 +35,7 @@ export function ContractCard({ contract }: ContractCardProps) {
 
   return (
     <Link href={`/contracts/${contract.id}`}>
-      <article className="group border-2 border-black bg-white p-6 text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-transform group-hover:-translate-y-0.5">
+      <article className="group border-2 border-zinc-700 bg-zinc-900 p-6 text-white shadow-[4px_4px_0px_0px_rgba(255,255,255,0.05)] transition-transform group-hover:-translate-y-0.5">
         <div className="mb-3 flex items-center justify-between gap-2">
           <ContractStatusBadge status={contract.status} />
           {pendingPartner && (
@@ -47,12 +47,12 @@ export function ContractCard({ contract }: ContractCardProps) {
         <p className="mb-3 line-clamp-2 text-sm font-semibold">
           {contract.goal_text}
         </p>
-        <p className="mb-2 text-xs uppercase text-zinc-600">
+        <p className="mb-2 text-xs uppercase text-zinc-400">
           {pastDue
             ? "Deadline passed. Awaiting resolution."
             : `${remaining} Days Remaining. Execute.`}
         </p>
-        <p className="text-xs font-semibold uppercase text-zinc-800">
+        <p className="text-xs font-semibold uppercase text-zinc-400">
           Penalty: <span className="font-black">₹{contract.penalty_amount}</span>
         </p>
       </article>
