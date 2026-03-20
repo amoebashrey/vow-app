@@ -34,12 +34,12 @@ export function ContractCard({ contract }: ContractCardProps) {
   );
 
   const bloomColor =
-    contract.status === "failed" ? "bg-red-500/[0.06]" : "bg-[#EFFF00]/[0.06]";
+    contract.status === "failed" ? "bg-red-500/[0.12]" : "bg-[#EFFF00]/[0.12]";
 
   return (
     <Link href={`/contracts/${contract.id}`}>
       <article className="relative overflow-hidden bg-white/[0.03] border border-white/[0.08] rounded-xl p-5 text-white transition-all hover:-translate-y-0.5 hover:border-white/[0.15]">
-        <div className={`pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full ${bloomColor}`} />
+        <div className={`pointer-events-none absolute -right-8 -top-8 h-40 w-40 rounded-full ${bloomColor}`} />
         <div className="mb-3 flex items-center justify-between gap-2">
           <ContractStatusBadge status={contract.status} />
           {pendingPartner && (
