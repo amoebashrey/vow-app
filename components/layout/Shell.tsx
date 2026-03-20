@@ -19,7 +19,7 @@ export async function Shell({ children }: ShellProps) {
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-4">
           <Link
             href={user ? "/dashboard" : "/"}
-            className="text-xs font-black uppercase tracking-[0.3em]"
+            className="text-lg font-black uppercase tracking-[0.3em]"
           >
             Vow
           </Link>

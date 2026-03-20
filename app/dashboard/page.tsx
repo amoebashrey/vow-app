@@ -47,8 +47,8 @@ export default async function DashboardPage() {
     <div className="min-h-screen px-4 py-10">
       <div className="mx-auto flex max-w-4xl items-center justify-between gap-4 pb-6">
         <div>
-          <h1 className="mb-1 text-2xl font-black uppercase tracking-[0.2em]">
-            Your Vows
+          <h1 className="mb-1 text-4xl font-black uppercase tracking-tight">
+            Your Vows.
           </h1>
           <p className="text-xs uppercase text-zinc-400">
             Contracts you have made or agreed to uphold.

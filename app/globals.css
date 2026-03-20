@@ -1,6 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --volt: #EFFF00;
+}
 
 html,
 body {
@@ -9,4 +15,10 @@ body {
 
 body {
   @apply bg-neutral-950 text-zinc-50 antialiased;
+}
+
+h1,
+h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.05em;
 }

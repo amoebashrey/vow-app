@@ -35,7 +35,7 @@ export function ContractCard({ contract }: ContractCardProps) {
 
   return (
     <Link href={`/contracts/${contract.id}`}>
-      <article className="group border-2 border-zinc-700 bg-zinc-900 p-6 text-white shadow-[4px_4px_0px_0px_rgba(255,255,255,0.05)] transition-transform group-hover:-translate-y-0.5">
+      <article className="group border-2 border-zinc-700 bg-zinc-900 p-6 text-white shadow-[4px_4px_0px_0px_rgba(255,255,255,0.05)] transition-all group-hover:-translate-y-0.5 group-hover:border-l-4 group-hover:border-l-[#EFFF00]">
         <div className="mb-3 flex items-center justify-between gap-2">
           <ContractStatusBadge status={contract.status} />
           {pendingPartner && (
@@ -53,7 +53,7 @@ export function ContractCard({ contract }: ContractCardProps) {
             : `${remaining} Days Remaining. Execute.`}
         </p>
         <p className="text-xs font-semibold uppercase text-zinc-400">
-          Penalty: <span className="font-black">₹{contract.penalty_amount}</span>
+          Penalty: <span className="font-black text-[#EFFF00]">₹{contract.penalty_amount}</span>
         </p>
       </article>
     </Link>
