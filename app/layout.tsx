@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Bebas_Neue, Epilogue } from "next/font/google";
 import "./globals.css";
 
@@ -18,7 +18,6 @@ export const metadata: Metadata = {
   title: "Vow",
   description: "Private Accountability Contracts",
   manifest: "/manifest.json",
-  themeColor: "#09090B",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
@@ -27,6 +26,10 @@ export const metadata: Metadata = {
   icons: {
     apple: "/icon-192.png"
   }
+};
+
+export const viewport: Viewport = {
+  themeColor: "#09090B"
 };
 
 export default function RootLayout({
