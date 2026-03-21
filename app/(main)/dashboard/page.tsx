@@ -20,7 +20,7 @@ export default async function DashboardPage() {
   const { data } = await supabase
     .from("contract_participants")
     .select(
-      "role, accepted, contracts:contracts ( id, goal_text, deadline, penalty_amount, status, contract_participants ( role, accepted ) )"
+      "role, accepted, contracts:contracts ( id, goal_text, deadline, penalty_amount, status, partner_email, contract_participants ( role, accepted ) )"
     )
     .eq("user_id", user.id);
 
@@ -35,6 +35,7 @@ export default async function DashboardPage() {
           deadline: contract.deadline,
           penalty_amount: contract.penalty_amount,
           status: contract.status,
+          partner_email: contract.partner_email,
           participants:
             contract.contract_participants?.map((p: any) => ({
               role: p.role,
@@ -72,38 +73,27 @@ export default async function DashboardPage() {
           </div>
         ) : (
           <>
-            {/* Stats cards — stacked */}
-            <div className="mb-8 flex flex-col gap-3">
-              <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-6">
-                <span className="mb-3 block text-[10px] uppercase tracking-[0.3em] text-zinc-500">
-                  Total Liability
-                </span>
-                <span className="text-4xl font-black text-[#EFFF00]">
-                  ₹{totalExposure.toLocaleString()}
-                </span>
+            {/* Stats cards — responsive grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+              <div className="glass-card border border-[#48474A]/15 p-8 flex flex-col justify-between h-44 rounded-xl">
+                <span className="text-[10px] tracking-widest text-[#adaaad] font-bold uppercase font-['Epilogue']">Total Liability</span>
+                <span className="text-4xl font-['Bebas_Neue'] text-[#deed00] tracking-widest">₹{totalExposure.toLocaleString()}</span>
               </div>
-              <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-6">
-                <span className="mb-3 block text-[10px] uppercase tracking-[0.3em] text-zinc-500">
-                  Active Contracts
-                </span>
-                <span className="text-4xl font-black text-white">
-                  {String(active.length).padStart(2, "0")}
-                </span>
+              <div className="glass-card border border-[#48474A]/15 p-8 flex flex-col justify-between h-44 rounded-xl">
+                <span className="text-[10px] tracking-widest text-[#adaaad] font-bold uppercase font-['Epilogue']">Active Contracts</span>
+                <span className="text-4xl font-['Bebas_Neue'] text-[#f9f9f9] tracking-widest">{String(active.length).padStart(2, "0")}</span>
               </div>
-              <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-6">
-                <span className="mb-3 block text-[10px] uppercase tracking-[0.3em] text-zinc-500">
-                  Success Rate
-                </span>
-                <span className="text-4xl font-black text-white">
-                  {successRate !== null ? `${successRate}%` : "—"}
-                </span>
+              <div className="glass-card border border-[#48474A]/15 p-8 flex flex-col justify-between h-44 rounded-xl">
+                <span className="text-[10px] tracking-widest text-[#adaaad] font-bold uppercase font-['Epilogue']">Success Rate</span>
+                <span className="text-4xl font-['Bebas_Neue'] text-[#f9f9f9] tracking-widest">{successRate !== null ? `${successRate}%` : "—"}</span>
               </div>
             </div>
 
             {/* Section label */}
-            <p className="mb-4 text-[10px] uppercase tracking-[0.3em] text-zinc-500">
-              Active Commitments
-            </p>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-['Epilogue'] text-xs font-bold tracking-[0.2em] text-[#48474A] uppercase">Active Commitments</h3>
+              <div className="h-px bg-[#48474A]/20 flex-grow ml-6"></div>
+            </div>
 
             {/* Nudge bar */}
             {overdue.length > 0 && (

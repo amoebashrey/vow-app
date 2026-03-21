@@ -12,6 +12,7 @@ export interface ContractSummary {
   penalty_amount: number;
   status: "active" | "completed" | "failed";
   participants: ParticipantSummary[];
+  partner_email?: string;
 }
 
 interface ContractCardProps {
@@ -32,38 +33,36 @@ export function ContractCard({ contract }: ContractCardProps) {
 
   return (
     <Link href={`/contracts/${contract.id}`}>
-      <article className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-5 text-white transition-all hover:-translate-y-0.5 hover:border-white/[0.15]">
-        {/* Top row: dot + contract ID */}
-        <div className="flex items-center">
-          <span className="mr-2 inline-block h-2 w-2 rounded-full bg-[#EFFF00]" />
-          <span className="text-[10px] uppercase tracking-widest text-zinc-500">
-            Contract #{shortId}
-          </span>
-        </div>
-
-        {/* Goal text */}
-        <h3 className="mb-3 mt-2 text-2xl font-black uppercase">
-          {contract.goal_text}
-        </h3>
-
-        {/* Bottom row */}
-        <div className="flex items-end justify-between">
-          <div>
-            <span className="block text-[9px] uppercase tracking-[0.2em] text-zinc-500">
-              Penalty
+      <article className="glass-card group border border-[#48474A]/15 rounded-xl p-8 md:p-10 flex flex-col md:flex-row md:items-center justify-between transition-all duration-300 hover:border-white/20">
+        {/* Left: contract info */}
+        <div className="flex flex-col gap-4">
+          <div className="flex items-center gap-3">
+            <span className="h-2 w-2 rounded-full bg-[#deed00] shadow-[0_0_10px_#EFFF00]" />
+            <span className="text-[10px] tracking-widest text-[#adaaad] font-bold uppercase font-['Epilogue']">
+              Contract #{shortId}
             </span>
-            <span className="text-2xl font-black text-[#EFFF00]">
+          </div>
+          <h3 className="font-['Bebas_Neue'] text-3xl md:text-4xl text-[#f9f9f9] tracking-[0.05em] uppercase">
+            {contract.goal_text}
+          </h3>
+          <p className="text-xs text-[#adaaad] max-w-md font-['Inter'] leading-relaxed tracking-wide">
+            Witness: {contract.partner_email ?? "Pending"}
+          </p>
+        </div>
+        {/* Right: penalty + remaining */}
+        <div className="mt-8 md:mt-0 flex flex-row md:flex-col items-end justify-between md:justify-center gap-2 md:text-right">
+          <div className="flex flex-col items-start md:items-end">
+            <span className="text-[10px] tracking-widest text-[#adaaad] font-bold uppercase font-['Epilogue'] mb-1">Penalty</span>
+            <span className="text-4xl font-['Bebas_Neue'] text-[#deed00] tracking-widest leading-none">
               ₹{contract.penalty_amount.toLocaleString()}
             </span>
           </div>
-          <div className="text-right">
-            <span className="block text-[9px] uppercase tracking-[0.2em] text-zinc-500">
-              Remaining
-            </span>
+          <div className="flex flex-col items-end">
+            <span className="text-[10px] tracking-widest text-[#48474A] font-bold uppercase font-['Epilogue']">Remaining</span>
             {pastDue ? (
-              <span className="text-lg font-black text-red-400">Overdue</span>
+              <span className="text-xl font-['Bebas_Neue'] text-[#ff3e00] tracking-widest uppercase">Overdue</span>
             ) : (
-              <span className="text-lg font-black text-white">
+              <span className="text-xl font-['Bebas_Neue'] text-[#f9f9f9] tracking-widest uppercase">
                 {String(remaining).padStart(2, "0")} Days
               </span>
             )}
