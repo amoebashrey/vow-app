@@ -17,10 +17,36 @@ body {
 
 body {
   @apply bg-neutral-950 text-zinc-50 antialiased;
+  font-family: var(--font-epilogue), sans-serif;
+}
+
+.font-epilogue {
+  font-family: var(--font-epilogue), sans-serif;
 }
 
 h1,
-h2 {
+h2,
+h3 {
   font-family: var(--font-bebas), sans-serif;
   letter-spacing: 0.05em;
+}
+
+.font-bebas {
+  font-family: var(--font-bebas), sans-serif;
+}
+
+.glass-card {
+  background: linear-gradient(135deg, rgba(38,37,40,0.4) 0%, rgba(38,37,40,0.1) 100%);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at top left, rgba(249,249,249,0.05) 0%, transparent 60%);
+  pointer-events: none;
 }

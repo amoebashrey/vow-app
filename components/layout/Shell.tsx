@@ -19,22 +19,21 @@ export async function Shell({ children }: ShellProps) {
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-4">
           <Link
             href={user ? "/dashboard" : "/"}
-            className="text-lg font-black uppercase tracking-[0.3em]"
           >
-            Vow
+            <span className="font-bebas text-2xl tracking-[0.15em] text-white">VOW</span>
           </Link>
           <nav className="flex items-center gap-4 text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-400">
             {user && (
               <>
                 <Link
                   href="/dashboard"
-                  className="hover:text-zinc-100"
+                  className="hover:text-[#EFFF00] transition-colors"
                 >
                   Dashboard
                 </Link>
                 <Link
                   href="/contracts/new"
-                  className="hover:text-zinc-100"
+                  className="hover:text-[#EFFF00] transition-colors"
                 >
                   New Contract
                 </Link>
@@ -48,13 +47,13 @@ export async function Shell({ children }: ShellProps) {
               <>
                 <Link
                   href="/login"
-                  className="hover:text-zinc-100"
+                  className="hover:text-[#EFFF00] transition-colors"
                 >
                   Login
                 </Link>
                 <Link
                   href="/signup"
-                  className="hover:text-zinc-100"
+                  className="hover:text-[#EFFF00] transition-colors"
                 >
                   Sign Up
                 </Link>

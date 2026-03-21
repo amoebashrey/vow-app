@@ -13,15 +13,15 @@ export default async function NewContractPage() {
   }
 
   return (
-    <div className="min-h-screen px-4 py-10">
-      <div className="mx-auto max-w-2xl border-2 border-black bg-zinc-900/60 p-8 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-        <h1 className="mb-2 text-2xl font-black uppercase tracking-[0.2em]">
-          New Contract
-        </h1>
-        <p className="mb-8 text-xs uppercase text-zinc-400">
-          Declare the commitment. Set the stakes. Invite your partner.
+    <div className="min-h-screen px-4 py-8 pb-24">
+      <div className="mx-auto max-w-lg">
+        <h1 className="mb-2 text-6xl font-black uppercase leading-none">NEW CONTRACT.</h1>
+        <p className="mb-8 text-sm uppercase tracking-widest text-[#adaaad] opacity-70">
+          Define the terms of your sovereignty.
         </p>
-        <CreateContractForm />
+        <div className="glass-card rounded-xl border border-[#48474A]/15 p-8">
+          <CreateContractForm />
+        </div>
       </div>
     </div>
   );

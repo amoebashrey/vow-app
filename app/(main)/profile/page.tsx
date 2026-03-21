@@ -30,8 +30,8 @@ export default async function ProfilePage({ searchParams }: ProfilePageProps) {
       <div className="mx-auto max-w-2xl space-y-8">
 
         {/* Identity section */}
-        <div className="border-2 border-zinc-800 bg-zinc-900 p-8 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-          <h1 className="mb-1 text-2xl font-black uppercase tracking-[0.2em]">
+        <div className="glass-card rounded-xl border border-[#48474A]/15 p-8">
+          <h1 className="font-bebas mb-1 text-4xl font-black uppercase">
             Your Profile.
           </h1>
           <p className="mb-6 text-xs uppercase text-zinc-400">
@@ -47,10 +47,12 @@ export default async function ProfilePage({ searchParams }: ProfilePageProps) {
         </div>
 
         {/* Danger zone section */}
-        <div className="border-2 border-red-900 bg-zinc-900 p-8 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-          <p className="mb-6 text-xs font-black uppercase tracking-[0.18em] text-red-500">
-            Danger Zone.
-          </p>
+        <div className="flex items-center gap-4 my-8">
+          <div className="h-px flex-grow bg-red-800/30" />
+          <h2 className="text-2xl font-black text-red-500 uppercase tracking-widest">DANGER ZONE.</h2>
+          <div className="h-px flex-grow bg-red-800/30" />
+        </div>
+        <div className="glass-card rounded-xl border border-red-900/30 p-8">
           <DeleteAccountForm />
         </div>
 

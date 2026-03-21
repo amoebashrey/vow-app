@@ -1,11 +1,17 @@
 import type { Metadata } from "next";
-import { Bebas_Neue } from "next/font/google";
+import { Bebas_Neue, Epilogue } from "next/font/google";
 import "./globals.css";
 
 const bebasNeue = Bebas_Neue({
   weight: "400",
   subsets: ["latin"],
   variable: "--font-bebas"
+});
+
+const epilogue = Epilogue({
+  subsets: ["latin"],
+  weight: ["400", "700", "800"],
+  variable: "--font-epilogue"
 });
 
 export const metadata: Metadata = {
@@ -30,7 +36,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`min-h-screen bg-background text-zinc-50 ${bebasNeue.variable}`}>
+      <body className={`min-h-screen bg-background text-zinc-50 ${bebasNeue.variable} ${epilogue.variable}`}>
         <script
           dangerouslySetInnerHTML={{
             __html: `if ('serviceWorker' in navigator) { navigator.serviceWorker.register('/sw.js'); }`
