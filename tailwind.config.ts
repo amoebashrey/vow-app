@@ -8,7 +8,9 @@ const config: Config = {
         background: '#09090B'
       },
       fontFamily: {
-        sans: ['var(--font-sans)', 'system-ui', 'sans-serif']
+        sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
+        'bebas': ['var(--font-bebas)', 'sans-serif'],
+        'epilogue': ['var(--font-epilogue)', 'sans-serif']
       }
     }
   },
