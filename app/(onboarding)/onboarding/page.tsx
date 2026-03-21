@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { createBrowserClient } from "@supabase/ssr";
 
 const screens = [
   {
@@ -51,11 +52,23 @@ export default function OnboardingPage() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    if (localStorage.getItem("vow_onboarded")) {
-      router.replace("/signup");
-    } else {
-      setReady(true);
+    async function check() {
+      const supabase = createBrowserClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+      );
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        router.replace("/dashboard");
+        return;
+      }
+      if (localStorage.getItem("vow_onboarded")) {
+        router.replace("/signup");
+      } else {
+        setReady(true);
+      }
     }
+    check();
   }, [router]);
 
   function finish() {
