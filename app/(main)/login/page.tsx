@@ -54,24 +54,24 @@ export default function LoginPage() {
 
       <main className="w-full max-w-md relative z-10">
         {/* Brand header */}
-        <div className="mb-12 text-center">
+        <div className="mb-6 md:mb-12 text-center">
           <h1 className="font-bebas text-4xl tracking-[0.2em] text-[#f9f9f9]">VOW</h1>
         </div>
 
         {/* Glass card */}
         <div
-          className="relative overflow-hidden rounded-xl border border-[#48474A]/15 p-8 md:p-10 shadow-[0_20px_40px_rgba(0,0,0,0.4)]"
+          className="relative overflow-hidden rounded-xl border border-[#48474A]/15 p-6 md:p-10 shadow-[0_20px_40px_rgba(0,0,0,0.4)]"
           style={{ background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)' }}
         >
           {/* Bloom inside card */}
           <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-white/5 blur-[60px] pointer-events-none rounded-full" />
 
-          <header className="mb-8 text-center">
+          <header className="mb-5 md:mb-8 text-center">
             <h2 className="font-bebas text-5xl tracking-[0.1em] text-[#f9f9f9] leading-none">ENTER THE VOW.</h2>
             <p className="font-epilogue text-xs tracking-widest text-[#adaaad] mt-3 uppercase">Access your accountability ledger.</p>
           </header>
 
-          <form action={onSubmit} className="space-y-6">
+          <form action={onSubmit} className="space-y-4 md:space-y-6">
             <div>
               <label className="block font-epilogue text-[10px] tracking-[0.2em] text-[#adaaad] uppercase mb-2">
                 Account Email
@@ -80,7 +80,7 @@ export default function LoginPage() {
                 name="email"
                 type="email"
                 required
-                className="w-full bg-transparent border-0 border-b border-[#48474A] py-3 px-0 text-[#f9f9f9] placeholder:text-[#767577]/40 focus:ring-0 focus:border-[#f9f9f9] transition-all text-sm tracking-wide outline-none"
+                className="w-full bg-transparent border-0 border-b border-[#48474A] py-2 md:py-3 px-0 text-[#f9f9f9] placeholder:text-[#767577]/40 focus:ring-0 focus:border-[#f9f9f9] transition-all text-sm tracking-wide outline-none"
               />
             </div>
             <div>
@@ -91,7 +91,7 @@ export default function LoginPage() {
                 name="password"
                 type="password"
                 required
-                className="w-full bg-transparent border-0 border-b border-[#48474A] py-3 px-0 text-[#f9f9f9] placeholder:text-[#767577]/40 focus:ring-0 focus:border-[#f9f9f9] transition-all text-sm tracking-wide outline-none"
+                className="w-full bg-transparent border-0 border-b border-[#48474A] py-2 md:py-3 px-0 text-[#f9f9f9] placeholder:text-[#767577]/40 focus:ring-0 focus:border-[#f9f9f9] transition-all text-sm tracking-wide outline-none"
               />
               <div className="text-right mt-1">
                 <Link href="/forgot-password" className="font-epilogue text-[10px] text-[#adaaad] hover:text-[#f9f9f9] transition-colors">
@@ -143,7 +143,7 @@ export default function LoginPage() {
         </div>
 
         {/* Footer */}
-        <footer className="mt-8 text-center">
+        <footer className="mt-6 md:mt-8 text-center">
           <p className="font-epilogue text-sm text-[#adaaad]">
             Don&apos;t have an account?{' '}
             <Link href="/signup" className="text-[#f9f9f9] hover:underline">Join the VOW →</Link>

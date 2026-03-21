@@ -20,7 +20,7 @@ export default function OnboardingPage() {
         router.replace("/dashboard");
         return;
       }
-      if (localStorage.getItem("vow_onboarded")) {
+      if (localStorage.getItem("vow_onboarding_seen") === "true") {
         router.replace("/signup");
       } else {
         setReady(true);
@@ -30,7 +30,7 @@ export default function OnboardingPage() {
   }, [router]);
 
   function finish() {
-    localStorage.setItem("vow_onboarded", "1");
+    localStorage.setItem("vow_onboarding_seen", "true");
     router.push("/signup");
   }
 

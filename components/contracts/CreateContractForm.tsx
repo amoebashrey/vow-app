@@ -21,7 +21,7 @@ export function CreateContractForm() {
   return (
     <form
       action={onSubmit}
-      className="space-y-6"
+      className="space-y-4 md:space-y-6"
     >
       <div>
         <label className="block text-xs font-black uppercase">
@@ -30,7 +30,7 @@ export function CreateContractForm() {
         <textarea
           name="goal_text"
           required
-          className="mt-2 w-full border-b-2 border-black bg-transparent px-0 py-2 text-sm text-zinc-50 outline-none placeholder:text-zinc-500"
+          className="mt-2 w-full border-b-2 border-black bg-transparent px-0 py-1.5 md:py-2 text-sm text-zinc-50 outline-none placeholder:text-zinc-500"
           rows={3}
           placeholder="I VOW TO..."
         />
@@ -45,7 +45,7 @@ export function CreateContractForm() {
             type="date"
             name="deadline"
             required
-            className="mt-2 w-full border-b-2 border-black bg-transparent px-0 py-2 text-sm text-zinc-50 outline-none"
+            className="mt-2 w-full border-b-2 border-black bg-transparent px-0 py-1.5 md:py-2 text-sm text-zinc-50 outline-none"
           />
         </div>
         <div>
@@ -57,7 +57,7 @@ export function CreateContractForm() {
             name="penalty_amount"
             min={1}
             required
-            className="mt-2 w-full border-b-2 border-black bg-transparent px-0 py-2 text-sm text-zinc-50 outline-none"
+            className="mt-2 w-full border-b-2 border-black bg-transparent px-0 py-1.5 md:py-2 text-sm text-zinc-50 outline-none"
           />
         </div>
       </div>
@@ -70,7 +70,7 @@ export function CreateContractForm() {
           type="email"
           name="partner_email"
           required
-          className="mt-2 w-full border-b-2 border-black bg-transparent px-0 py-2 text-sm text-zinc-50 outline-none"
+          className="mt-2 w-full border-b-2 border-black bg-transparent px-0 py-1.5 md:py-2 text-sm text-zinc-50 outline-none"
           placeholder="they@example.com"
         />
       </div>
@@ -84,7 +84,7 @@ export function CreateContractForm() {
       <button
         type="submit"
         disabled={isPending}
-        className="mt-4 w-full border-2 border-black bg-black px-4 py-3 text-xs font-bold uppercase tracking-[0.2em] text-white transition-all hover:bg-zinc-800 disabled:opacity-60"
+        className="mt-4 w-full border-2 border-black bg-black px-4 py-2.5 md:py-3 text-xs font-bold uppercase tracking-[0.2em] text-white transition-all hover:bg-zinc-800 disabled:opacity-60"
       >
         {isPending ? "Creating..." : "Create Contract"}
       </button>

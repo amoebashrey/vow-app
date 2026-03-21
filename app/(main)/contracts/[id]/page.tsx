@@ -57,7 +57,7 @@ export default async function ContractDetailPage({
   );
 
   return (
-    <div className="min-h-screen px-4 py-10">
+    <div className="min-h-screen px-4 py-4 md:py-10">
       <div className="mx-auto max-w-3xl">
         {/* Status badge */}
         <div className="mb-4">
@@ -65,12 +65,12 @@ export default async function ContractDetailPage({
         </div>
 
         {/* Goal text — hero */}
-        <h1 className="mb-6 text-5xl font-black uppercase leading-tight text-white">
+        <h1 className="mb-6 text-3xl md:text-5xl font-black uppercase leading-tight text-white">
           {contract.goal_text}
         </h1>
 
         {/* Penalty card */}
-        <div className="mb-6 rounded-xl border border-white/[0.06] bg-white/[0.03] p-6">
+        <div className="mb-6 rounded-xl border border-white/[0.06] bg-white/[0.03] p-4 md:p-6">
           <p className="mb-1 text-[10px] font-black uppercase tracking-[0.18em] text-zinc-500">
             Potential Forfeit
           </p>
