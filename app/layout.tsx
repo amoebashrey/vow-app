@@ -11,10 +11,8 @@ export const metadata: Metadata = {
     statusBarStyle: "black-translucent",
     title: "VOW"
   },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    viewportFit: "cover"
+  icons: {
+    apple: "/icon-192.png"
   }
 };
 
@@ -25,9 +23,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        <link rel="apple-touch-icon" href="/icon-192.png" />
-      </head>
       <body className="min-h-screen bg-background text-zinc-50">
         <script
           dangerouslySetInnerHTML={{
