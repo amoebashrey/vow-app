@@ -28,7 +28,7 @@ function daysRemaining(deadline: string) {
 
 export function ContractCard({ contract }: ContractCardProps) {
   const remaining = daysRemaining(contract.deadline);
-  const pastDue = remaining < 0;
+  const pastDue = remaining <= 0;
   const shortId = contract.id.slice(0, 8).toUpperCase();
 
   return (
@@ -38,31 +38,31 @@ export function ContractCard({ contract }: ContractCardProps) {
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-3">
             <span className="h-2 w-2 rounded-full bg-[#deed00] shadow-[0_0_10px_#EFFF00]" />
-            <span className="text-[10px] tracking-widest text-[#adaaad] font-bold uppercase font-['Epilogue']">
+            <span className="text-[10px] tracking-widest text-[#adaaad] font-bold uppercase font-epilogue">
               Contract #{shortId}
             </span>
           </div>
-          <h3 className="font-['Bebas_Neue'] text-3xl md:text-4xl text-[#f9f9f9] tracking-[0.05em] uppercase">
+          <h3 className="font-bebas text-3xl md:text-4xl text-[#f9f9f9] tracking-[0.05em] uppercase">
             {contract.goal_text}
           </h3>
-          <p className="text-xs text-[#adaaad] max-w-md font-['Inter'] leading-relaxed tracking-wide">
+          <p className="text-xs text-[#adaaad] max-w-md leading-relaxed tracking-wide">
             Witness: {contract.partner_email ?? "Pending"}
           </p>
         </div>
         {/* Right: penalty + remaining */}
         <div className="mt-8 md:mt-0 flex flex-row md:flex-col items-end justify-between md:justify-center gap-2 md:text-right">
           <div className="flex flex-col items-start md:items-end">
-            <span className="text-[10px] tracking-widest text-[#adaaad] font-bold uppercase font-['Epilogue'] mb-1">Penalty</span>
-            <span className="text-4xl font-['Bebas_Neue'] text-[#deed00] tracking-widest leading-none">
+            <span className="text-[10px] tracking-widest text-[#adaaad] font-bold uppercase font-epilogue mb-1">Penalty</span>
+            <span className="text-4xl font-bebas text-[#deed00] tracking-widest leading-none">
               ₹{contract.penalty_amount.toLocaleString()}
             </span>
           </div>
           <div className="flex flex-col items-end">
-            <span className="text-[10px] tracking-widest text-[#48474A] font-bold uppercase font-['Epilogue']">Remaining</span>
+            <span className="text-[10px] tracking-widest text-[#48474A] font-bold uppercase font-epilogue">Remaining</span>
             {pastDue ? (
-              <span className="text-xl font-['Bebas_Neue'] text-[#ff3e00] tracking-widest uppercase">Overdue</span>
+              <span className="text-xl font-bebas text-[#ff3e00] tracking-widest uppercase">Overdue</span>
             ) : (
-              <span className="text-xl font-['Bebas_Neue'] text-[#f9f9f9] tracking-widest uppercase">
+              <span className="text-xl font-bebas text-[#f9f9f9] tracking-widest uppercase">
                 {String(remaining).padStart(2, "0")} Days
               </span>
             )}

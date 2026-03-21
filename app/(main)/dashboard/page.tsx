@@ -76,22 +76,22 @@ export default async function DashboardPage() {
             {/* Stats cards — responsive grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
               <div className="glass-card border border-[#48474A]/15 p-8 flex flex-col justify-between h-44 rounded-xl">
-                <span className="text-[10px] tracking-widest text-[#adaaad] font-bold uppercase font-['Epilogue']">Total Liability</span>
-                <span className="text-4xl font-['Bebas_Neue'] text-[#deed00] tracking-widest">₹{totalExposure.toLocaleString()}</span>
+                <span className="text-[10px] tracking-widest text-[#adaaad] font-bold uppercase font-epilogue">Total Liability</span>
+                <span className="text-4xl font-bebas text-[#deed00] tracking-widest">₹{totalExposure.toLocaleString()}</span>
               </div>
               <div className="glass-card border border-[#48474A]/15 p-8 flex flex-col justify-between h-44 rounded-xl">
-                <span className="text-[10px] tracking-widest text-[#adaaad] font-bold uppercase font-['Epilogue']">Active Contracts</span>
-                <span className="text-4xl font-['Bebas_Neue'] text-[#f9f9f9] tracking-widest">{String(active.length).padStart(2, "0")}</span>
+                <span className="text-[10px] tracking-widest text-[#adaaad] font-bold uppercase font-epilogue">Active Contracts</span>
+                <span className="text-4xl font-bebas text-[#f9f9f9] tracking-widest">{String(active.length).padStart(2, "0")}</span>
               </div>
               <div className="glass-card border border-[#48474A]/15 p-8 flex flex-col justify-between h-44 rounded-xl">
-                <span className="text-[10px] tracking-widest text-[#adaaad] font-bold uppercase font-['Epilogue']">Success Rate</span>
-                <span className="text-4xl font-['Bebas_Neue'] text-[#f9f9f9] tracking-widest">{successRate !== null ? `${successRate}%` : "—"}</span>
+                <span className="text-[10px] tracking-widest text-[#adaaad] font-bold uppercase font-epilogue">Success Rate</span>
+                <span className="text-4xl font-bebas text-[#f9f9f9] tracking-widest">{successRate !== null ? `${successRate}%` : "—"}</span>
               </div>
             </div>
 
             {/* Section label */}
             <div className="flex items-center justify-between mb-4">
-              <h3 className="font-['Epilogue'] text-xs font-bold tracking-[0.2em] text-[#48474A] uppercase">Active Commitments</h3>
+              <h3 className="font-epilogue text-xs font-bold tracking-[0.2em] text-[#48474A] uppercase">Active Commitments</h3>
               <div className="h-px bg-[#48474A]/20 flex-grow ml-6"></div>
             </div>
 
