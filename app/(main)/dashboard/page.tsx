@@ -43,25 +43,28 @@ export default async function DashboardPage() {
         } satisfies ContractSummary;
       }) ?? [];
 
+  const active = summaries.filter((c) => c.status === "active");
+  const completed = summaries.filter((c) => c.status === "completed");
+  const failed = summaries.filter((c) => c.status === "failed");
+  const totalExposure = active.reduce((sum, c) => sum + c.penalty_amount, 0);
+  const resolved = completed.length + failed.length;
+  const successRate = resolved > 0 ? Math.round((completed.length / resolved) * 100) : null;
+  const overdue = active.filter((c) => new Date(c.deadline) < new Date());
+
   return (
-    <div className="min-h-screen px-4 py-10">
-      <div className="mx-auto flex max-w-4xl items-center justify-between gap-4 pb-6">
-        <div>
-          <h1 className="mb-1 text-4xl font-black uppercase tracking-tight">
-            Your Vows.
-          </h1>
-          <p className="text-xs uppercase text-zinc-400">
-            Contracts you have made or agreed to uphold.
-          </p>
+    <div className="min-h-screen px-4 py-6">
+      <div className="mx-auto max-w-4xl">
+        {/* Top bar */}
+        <div className="mb-3 flex items-center justify-between">
+          <h1 className="text-2xl font-black uppercase">Your Vows.</h1>
+          <Link
+            href="/contracts/new"
+            className="rounded-sm border border-white/20 px-3 py-1.5 text-[10px] uppercase tracking-widest text-zinc-400 hover:border-white/40 hover:text-white"
+          >
+            New Vow
+          </Link>
         </div>
-        <a
-          href="/contracts/new"
-          className="border-2 border-black bg-black px-4 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-white transition-all hover:bg-zinc-800"
-        >
-          New Contract
-        </a>
-      </div>
-      <div className="mx-auto max-w-4xl space-y-4">
+
         {summaries.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 text-center">
             <h2 className="text-4xl font-black uppercase">No Vows Yet.</h2>
@@ -74,38 +77,46 @@ export default async function DashboardPage() {
           </div>
         ) : (
           <>
-            <p className="text-[10px] font-semibold uppercase tracking-widest text-zinc-500">
-              {summaries.filter((c) => c.status === "active").length} Active
-              {" · "}
-              {summaries.filter((c) => c.status === "completed").length} Completed
-              {" · "}
-              {summaries.filter((c) => c.status === "failed").length} Failed
+            {/* Stats line */}
+            <p className="mb-4 text-[10px] uppercase tracking-widest text-zinc-500">
+              {active.length} Active · {completed.length} Completed · {failed.length} Failed
             </p>
-            {(() => {
-              const overdue = summaries.filter(
-                (c) => c.status === "active" && new Date(c.deadline) < new Date()
-              );
-              if (overdue.length === 0) return null;
-              return (
-                <div className="flex items-center justify-between rounded-lg border border-[#EFFF00]/10 bg-[#EFFF00]/[0.04] px-4 py-3">
-                  <p className="text-[11px] uppercase tracking-widest text-zinc-400">
-                    {overdue.length} contract{overdue.length > 1 ? "s" : ""} awaiting resolution.
-                  </p>
-                  <Link
-                    href={`/contracts/${overdue[0].id}`}
-                    className="text-[11px] font-bold uppercase tracking-widest text-[#EFFF00]"
-                  >
-                    Resolve →
-                  </Link>
-                </div>
-              );
-            })()}
-            <div className="grid gap-4 md:grid-cols-2">
+
+            {/* Bento metrics */}
+            <div className="mb-4 grid grid-cols-3 gap-2">
+              <div className="rounded-xl border border-white/[0.06] bg-white/[0.03] p-3 text-center">
+                <span className="mb-1 block text-[8px] uppercase tracking-widest text-zinc-600">Total Exposure</span>
+                <span className="text-lg font-black text-[#EFFF00]">₹{totalExposure.toLocaleString()}</span>
+              </div>
+              <div className="rounded-xl border border-white/[0.06] bg-white/[0.03] p-3 text-center">
+                <span className="mb-1 block text-[8px] uppercase tracking-widest text-zinc-600">Active</span>
+                <span className="text-lg font-black text-white">{String(active.length).padStart(2, "0")}</span>
+              </div>
+              <div className="rounded-xl border border-white/[0.06] bg-white/[0.03] p-3 text-center">
+                <span className="mb-1 block text-[8px] uppercase tracking-widest text-zinc-600">Success Rate</span>
+                <span className="text-lg font-black text-white">{successRate !== null ? `${successRate}%` : "—"}</span>
+              </div>
+            </div>
+
+            {/* Nudge bar */}
+            {overdue.length > 0 && (
+              <div className="mb-4 flex items-center justify-between rounded-lg border border-[#EFFF00]/10 bg-[#EFFF00]/[0.04] px-4 py-2">
+                <p className="text-[10px] uppercase tracking-widest text-zinc-400">
+                  {overdue.length} contract{overdue.length > 1 ? "s" : ""} awaiting resolution.
+                </p>
+                <Link
+                  href={`/contracts/${overdue[0].id}`}
+                  className="text-[10px] font-bold uppercase tracking-widest text-[#EFFF00]"
+                >
+                  Resolve →
+                </Link>
+              </div>
+            )}
+
+            {/* Contract grid */}
+            <div className="grid grid-cols-2 gap-3">
               {summaries.map((c) => (
-                <ContractCard
-                  key={c.id}
-                  contract={c}
-                />
+                <ContractCard key={c.id} contract={c} />
               ))}
             </div>
           </>

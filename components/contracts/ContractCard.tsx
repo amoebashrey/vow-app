@@ -38,28 +38,27 @@ export function ContractCard({ contract }: ContractCardProps) {
 
   return (
     <Link href={`/contracts/${contract.id}`}>
-      <article className="relative overflow-hidden bg-white/[0.03] border border-white/[0.08] rounded-xl p-5 text-white transition-all hover:-translate-y-0.5 hover:border-white/[0.15]">
-        <div className={`pointer-events-none absolute -right-8 -top-8 h-40 w-40 rounded-full ${bloomColor}`} />
-        <div className="mb-3 flex items-center justify-between gap-2">
+      <article className="relative overflow-hidden rounded-xl border border-white/[0.08] bg-white/[0.03] p-4 text-white transition-all hover:-translate-y-0.5 hover:border-white/[0.15]">
+        <div className={`pointer-events-none absolute -right-6 -top-6 h-24 w-24 rounded-full ${bloomColor}`} />
+        <div className="mb-2 flex items-center">
           <ContractStatusBadge status={contract.status} />
           {pendingPartner && (
-            <span className="text-[10px] font-black uppercase tracking-[0.18em] text-amber-600">
-              Pending Acceptance
+            <span className="ml-2 text-[9px] font-black uppercase text-amber-400">
+              Pending
             </span>
           )}
         </div>
-        <p className="mb-3 line-clamp-2 text-sm font-semibold uppercase">
+        <p className="mb-2 truncate text-sm font-bold uppercase">
           {contract.goal_text}
         </p>
-        <p className="mb-2 text-xs uppercase text-zinc-400">
-          {pastDue
-            ? "Deadline passed. Awaiting resolution."
-            : `${remaining} Days Remaining. Execute.`}
-        </p>
-        <div className="my-3 h-px bg-white/[0.06]" />
-        <p className="text-xs font-semibold uppercase text-zinc-400">
-          Penalty: <span className="text-base font-black text-[#EFFF00]">₹{contract.penalty_amount}</span>
-        </p>
+        <div className="flex items-center justify-between">
+          {pastDue ? (
+            <span className="text-[10px] uppercase text-red-400">Overdue</span>
+          ) : (
+            <span className="text-[10px] uppercase text-zinc-500">{remaining} Days</span>
+          )}
+          <span className="text-sm font-black text-[#EFFF00]">₹{contract.penalty_amount}</span>
+        </div>
       </article>
     </Link>
   );

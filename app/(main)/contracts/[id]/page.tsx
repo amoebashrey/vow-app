@@ -50,8 +50,6 @@ export default async function ContractDetailPage({
   const canResolve =
     contract.status === "active" && pastDeadline && allAccepted;
 
-  const penaltyText = `Contract Failed. Settle your debt: ₹${contract.penalty_amount}.`;
-
   const remainingDays = Math.ceil(
     (deadlineDate.getTime() - today.setHours(0, 0, 0, 0)) /
       (1000 * 60 * 60 * 24)
@@ -59,70 +57,78 @@ export default async function ContractDetailPage({
 
   return (
     <div className="min-h-screen px-4 py-10">
-      <div className="mx-auto max-w-3xl border-2 border-black bg-white p-8 text-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-        <div className="mb-4 flex items-center justify-between gap-3">
-          <h1 className="text-2xl font-black uppercase tracking-[0.2em]">
-            Contract
-          </h1>
+      <div className="mx-auto max-w-3xl">
+        {/* Status badge */}
+        <div className="mb-4">
           <ContractStatusBadge status={contract.status} />
         </div>
 
-        <div className="mb-6 border border-dashed border-zinc-400 p-4 text-sm">
-          <p className="mb-1 text-[10px] font-black uppercase tracking-[0.18em] text-zinc-600">
-            Commitment
+        {/* Goal text — hero */}
+        <h1 className="mb-6 text-5xl font-black uppercase leading-tight text-white">
+          {contract.goal_text}
+        </h1>
+
+        {/* Penalty card */}
+        <div className="mb-6 rounded-xl border border-white/[0.06] bg-white/[0.03] p-6">
+          <p className="mb-1 text-[10px] font-black uppercase tracking-[0.18em] text-zinc-500">
+            Potential Forfeit
           </p>
-          <p>{contract.goal_text}</p>
+          <p className="text-4xl font-black text-[#EFFF00]">
+            ₹{contract.penalty_amount}
+          </p>
+          <p className="mt-1 text-[9px] uppercase tracking-widest text-zinc-500">
+            Collateral Locked
+          </p>
         </div>
 
-        <div className="mb-6 grid gap-4 text-xs uppercase text-zinc-700 md:grid-cols-3">
+        {/* Details grid */}
+        <div className="mb-6 grid gap-4 md:grid-cols-3">
           <div>
-            <p className="font-semibold">Deadline</p>
-            <p className="mt-1 normal-case">
+            <p className="text-[10px] font-semibold uppercase tracking-widest text-zinc-500">
+              Deadline
+            </p>
+            <p className="mt-1 text-sm text-zinc-300">
               {deadlineDate.toLocaleDateString()}
             </p>
-            <p className="mt-1 text-[11px] text-zinc-600">
+            <p className="mt-1 text-[10px] text-zinc-500">
               {pastDeadline
                 ? "Deadline reached."
-                : `${remainingDays} Days Remaining. Execute.`}
+                : `${remainingDays} Days Remaining.`}
             </p>
           </div>
           <div>
-            <p className="font-semibold">Penalty</p>
-            <p className="mt-1 normal-case font-black">
-              ₹{contract.penalty_amount}
+            <p className="text-[10px] font-semibold uppercase tracking-widest text-zinc-500">
+              Creator
+            </p>
+            <p className="mt-1 text-sm text-zinc-300">
+              {creator?.accepted ? "Locked In" : "Pending"}
             </p>
           </div>
           <div>
-            <p className="font-semibold">Participants</p>
-            <p className="mt-1 normal-case">
-              Creator:{" "}
-              <span className="font-semibold">
-                {creator?.accepted ? "Locked In" : "Pending"}
-              </span>
+            <p className="text-[10px] font-semibold uppercase tracking-widest text-zinc-500">
+              Witness
             </p>
-            <p className="mt-1 normal-case">
-              Partner:{" "}
-              <span className="font-semibold">
-                {partner?.accepted ? "Locked In" : "Pending"}
-              </span>
+            <p className="mt-1 text-sm text-zinc-300">
+              {partner?.accepted ? "Locked In" : "Pending"}
             </p>
           </div>
         </div>
 
+        {/* Share link section */}
         {searchParams.created === "1" && !partner?.accepted && (() => {
           const h = headers();
           const host = h.get("host") ?? "localhost:3000";
           const proto = h.get("x-forwarded-proto") ?? "http";
           const acceptUrl = `${proto}://${host}/contracts/${contract.id}/accept`;
           return (
-            <div className="mb-6 border-2 border-emerald-500 bg-emerald-50 p-4">
-              <p className="mb-2 text-xs font-black uppercase text-emerald-800">
-                Contract created. Share this link with your partner:
+            <div className="mb-6 rounded-xl border border-emerald-500/20 bg-emerald-950/40 p-4">
+              <p className="mb-2 text-xs font-black uppercase text-emerald-400">
+                Contract created. Share this link with your witness:
               </p>
-              <code className="block break-all text-sm text-emerald-900">
+              <code className="block break-all text-sm text-emerald-300">
                 {acceptUrl}
               </code>
-              <p className="mt-2 text-xs text-emerald-700">
+              <p className="mt-2 text-xs text-zinc-400">
                 They must sign in with the email you used ({contract.partner_email}).
               </p>
               <a
@@ -137,19 +143,24 @@ export default async function ContractDetailPage({
           );
         })()}
 
+        {/* Resolve section */}
         {canResolve && (
-          <div className="mt-6 border-t border-zinc-200 pt-6">
-            <p className="mb-3 text-xs uppercase text-zinc-700">
+          <div className="mt-6 border-t border-zinc-800 pt-6">
+            <p className="mb-3 text-xs uppercase text-zinc-400">
               The deadline has passed. Call it.
             </p>
             <ResolveContractForm contractId={contract.id} />
           </div>
         )}
 
+        {/* Failed state */}
         {contract.status === "failed" && (
-          <p className="mt-6 text-sm font-black uppercase text-red-600">
-            {penaltyText}
-          </p>
+          <div className="mt-6 rounded-xl border border-red-500/20 bg-red-950/40 p-6 text-center">
+            <p className="text-2xl font-black uppercase text-red-400">Contract Failed.</p>
+            <p className="mt-1 text-sm uppercase text-zinc-400">Settle Your Debt:</p>
+            <p className="mt-2 text-5xl font-black text-[#EFFF00]">₹{contract.penalty_amount}</p>
+            <p className="mt-3 text-[9px] uppercase tracking-widest text-zinc-500">Close the verdict immediately.</p>
+          </div>
         )}
       </div>
     </div>

@@ -32,7 +32,7 @@ export function CreateContractForm() {
           required
           className="mt-2 w-full border-b-2 border-black bg-transparent px-0 py-2 text-sm text-zinc-50 outline-none placeholder:text-zinc-500"
           rows={3}
-          placeholder="Describe the specific behavior or outcome you are committing to."
+          placeholder="I VOW TO..."
         />
       </div>
 
@@ -50,7 +50,7 @@ export function CreateContractForm() {
         </div>
         <div>
           <label className="block text-xs font-black uppercase">
-            Name the price of failure. (₹)
+            Price of Failure (₹)
           </label>
           <input
             type="number"
@@ -88,6 +88,9 @@ export function CreateContractForm() {
       >
         {isPending ? "Creating..." : "Create Contract"}
       </button>
+      <p className="mt-4 text-center text-[9px] uppercase tracking-widest text-zinc-600">
+        By creating this contract, you acknowledge the weight of your commitment.
+      </p>
     </form>
   );
 }

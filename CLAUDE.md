@@ -26,12 +26,19 @@ No test runner is configured.
 
 **Contract lifecycle**: Creator makes a contract (`/contracts/new`) → partner receives link → partner accepts (`/contracts/[id]/accept`) → creator resolves as completed/failed (`/contracts/[id]`).
 
-**Routing**: App Router with `app/` directory. Dynamic route `[id]` for contracts. URL query params (`?message=`, `?created=1`, `?updated=1`) carry success/error state between server action redirects.
+**Route groups**: The `app/` directory uses Next.js route groups to control layout wrapping:
+- `app/(main)/` — All authenticated pages (dashboard, contracts, profile, privacy, etc.). Wrapped by `Shell` component (header nav + footer).
+- `app/(onboarding)/` — Onboarding flow. No Shell, renders full-viewport.
+- `app/auth/` — Route Handlers for callback and logout. Sits at app root (not in a route group) to avoid Next.js 14 build issues with route handlers in route groups.
+
+Route groups are transparent in URLs — `app/(main)/dashboard/page.tsx` serves `/dashboard`.
+
+**Routing**: Dynamic route `[id]` for contracts. URL query params (`?message=`, `?created=1`, `?updated=1`) carry success/error state between server action redirects.
 
 ## UI/Design
 
-Neo-brutalist aesthetic: dark background (#09090B), zinc/emerald/red/amber palette, uppercase bold text with wide tracking, 2px black borders, hard drop shadows (`shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]`). Custom components in `components/ui/` — no external UI library.
+Dark glass-card aesthetic: background `#09090B`, volt yellow accent `#EFFF00` (CSS var `--volt`). Headings use Bebas Neue (self-hosted via `next/font/google`, CSS var `--font-bebas`). Contract cards use glass treatment (`bg-white/[0.03]`, `border-white/[0.08]`, rounded-xl) with radial gradient blooms. Status badges are pill-shaped. Custom components in `components/ui/` — no external UI library. PWA-enabled with manifest and service worker.
 
 ## Environment Variables
 
-Requires `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` in `.env.local`.
+Requires `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` in `.env.local`. `SUPABASE_SERVICE_ROLE_KEY` is needed for account deletion (admin API). `NEXT_PUBLIC_SITE_URL` is used for password reset redirect URLs.
