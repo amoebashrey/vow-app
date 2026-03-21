@@ -52,18 +52,13 @@ export default async function DashboardPage() {
   const overdue = active.filter((c) => new Date(c.deadline) < new Date());
 
   return (
-    <div className="min-h-screen px-4 py-6">
+    <div className="min-h-screen px-4 py-8">
       <div className="mx-auto max-w-4xl">
-        {/* Top bar */}
-        <div className="mb-3 flex items-center justify-between">
-          <h1 className="text-2xl font-black uppercase">Your Vows.</h1>
-          <Link
-            href="/contracts/new"
-            className="rounded-sm border border-white/20 px-3 py-1.5 text-[10px] uppercase tracking-widest text-zinc-400 hover:border-white/40 hover:text-white"
-          >
-            New Vow
-          </Link>
-        </div>
+        {/* Header */}
+        <p className="mb-1 text-[10px] uppercase tracking-[0.3em] text-zinc-500">
+          Sovereign Accountability
+        </p>
+        <h1 className="mb-8 text-5xl font-black uppercase">Your Vows.</h1>
 
         {summaries.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 text-center">
@@ -77,26 +72,38 @@ export default async function DashboardPage() {
           </div>
         ) : (
           <>
-            {/* Stats line */}
-            <p className="mb-4 text-[10px] uppercase tracking-widest text-zinc-500">
-              {active.length} Active · {completed.length} Completed · {failed.length} Failed
-            </p>
-
-            {/* Bento metrics */}
-            <div className="mb-4 grid grid-cols-3 gap-2">
-              <div className="rounded-xl border border-white/[0.06] bg-white/[0.03] p-3 text-center">
-                <span className="mb-1 block text-[8px] uppercase tracking-widest text-zinc-600">Total Exposure</span>
-                <span className="text-lg font-black text-[#EFFF00]">₹{totalExposure.toLocaleString()}</span>
+            {/* Stats cards — stacked */}
+            <div className="mb-8 flex flex-col gap-3">
+              <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-6">
+                <span className="mb-3 block text-[10px] uppercase tracking-[0.3em] text-zinc-500">
+                  Total Liability
+                </span>
+                <span className="text-4xl font-black text-[#EFFF00]">
+                  ₹{totalExposure.toLocaleString()}
+                </span>
               </div>
-              <div className="rounded-xl border border-white/[0.06] bg-white/[0.03] p-3 text-center">
-                <span className="mb-1 block text-[8px] uppercase tracking-widest text-zinc-600">Active</span>
-                <span className="text-lg font-black text-white">{String(active.length).padStart(2, "0")}</span>
+              <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-6">
+                <span className="mb-3 block text-[10px] uppercase tracking-[0.3em] text-zinc-500">
+                  Active Contracts
+                </span>
+                <span className="text-4xl font-black text-white">
+                  {String(active.length).padStart(2, "0")}
+                </span>
               </div>
-              <div className="rounded-xl border border-white/[0.06] bg-white/[0.03] p-3 text-center">
-                <span className="mb-1 block text-[8px] uppercase tracking-widest text-zinc-600">Success Rate</span>
-                <span className="text-lg font-black text-white">{successRate !== null ? `${successRate}%` : "—"}</span>
+              <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-6">
+                <span className="mb-3 block text-[10px] uppercase tracking-[0.3em] text-zinc-500">
+                  Success Rate
+                </span>
+                <span className="text-4xl font-black text-white">
+                  {successRate !== null ? `${successRate}%` : "—"}
+                </span>
               </div>
             </div>
+
+            {/* Section label */}
+            <p className="mb-4 text-[10px] uppercase tracking-[0.3em] text-zinc-500">
+              Active Commitments
+            </p>
 
             {/* Nudge bar */}
             {overdue.length > 0 && (
@@ -113,8 +120,8 @@ export default async function DashboardPage() {
               </div>
             )}
 
-            {/* Contract grid */}
-            <div className="grid grid-cols-2 gap-3">
+            {/* Contract list — single column */}
+            <div className="flex flex-col gap-4">
               {summaries.map((c) => (
                 <ContractCard key={c.id} contract={c} />
               ))}
