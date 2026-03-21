@@ -1,13 +1,8 @@
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "../../../lib/supabase/server";
-import { UpdateDisplayNameForm } from "../../../components/profile/UpdateDisplayNameForm";
-import { DeleteAccountForm } from "../../../components/profile/DeleteAccountForm";
+import { ProfileContent } from "../../../components/profile/ProfileContent";
 
-interface ProfilePageProps {
-  searchParams: { updated?: string };
-}
-
-export default async function ProfilePage({ searchParams }: ProfilePageProps) {
+export default async function ProfilePage() {
   const supabase = createSupabaseServerClient();
   const {
     data: { user }
@@ -23,40 +18,39 @@ export default async function ProfilePage({ searchParams }: ProfilePageProps) {
     .eq("id", user.id)
     .single();
 
-  const updated = searchParams.updated === "1";
+  // Fetch user's contracts for stats
+  const { data: participantData } = await supabase
+    .from("contract_participants")
+    .select("role, contracts:contracts ( id, goal_text, deadline, status )")
+    .eq("user_id", user.id)
+    .eq("role", "creator");
+
+  const contracts = participantData
+    ?.filter((row: any) => row.contracts)
+    .map((row: any) => ({
+      id: row.contracts.id,
+      goal_text: row.contracts.goal_text,
+      deadline: row.contracts.deadline,
+      status: row.contracts.status as string,
+    })) ?? [];
+
+  const keptCount = contracts.filter((c) => c.status === "completed").length;
+  const failedCount = contracts.filter((c) => c.status === "failed").length;
+  const pastVows = contracts.filter((c) => c.status === "completed" || c.status === "failed");
+
+  const displayName = profile?.display_name ?? user.email?.split("@")[0] ?? "User";
+  const initials = displayName.slice(0, 2).toUpperCase();
+  const memberSince = user.created_at ? new Date(user.created_at).toLocaleDateString("en-US", { month: "short", year: "numeric" }).toUpperCase() : "N/A";
 
   return (
-    <div className="min-h-screen px-4 py-10">
-      <div className="mx-auto max-w-2xl space-y-8">
-
-        {/* Identity section */}
-        <div className="glass-card rounded-xl border border-[#48474A]/15 p-8">
-          <h1 className="font-bebas mb-1 text-4xl font-black uppercase">
-            Your Profile.
-          </h1>
-          <p className="mb-6 text-xs uppercase text-zinc-400">
-            {user.email}
-          </p>
-          <p className="mb-6 text-xs font-black uppercase tracking-[0.18em] text-zinc-500">
-            Your Identity.
-          </p>
-          <UpdateDisplayNameForm
-            displayName={profile?.display_name ?? null}
-            updated={updated}
-          />
-        </div>
-
-        {/* Danger zone section */}
-        <div className="flex items-center gap-4 my-8">
-          <div className="h-px flex-grow bg-red-800/30" />
-          <h2 className="text-2xl font-black text-red-500 uppercase tracking-widest">DANGER ZONE.</h2>
-          <div className="h-px flex-grow bg-red-800/30" />
-        </div>
-        <div className="glass-card rounded-xl border border-red-900/30 p-8">
-          <DeleteAccountForm />
-        </div>
-
-      </div>
-    </div>
+    <ProfileContent
+      displayName={displayName}
+      email={user.email ?? ""}
+      initials={initials}
+      memberSince={memberSince}
+      keptCount={keptCount}
+      failedCount={failedCount}
+      pastVows={pastVows}
+    />
   );
 }
