@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "../../../../lib/supabase/server";
 import { ResolveContractForm } from "../../../../components/contracts/ResolveContractForm";
 import { ContractStatusBadge } from "../../../../components/contracts/ContractStatusBadge";
+import { CopyButton } from "../../../../components/ui/CopyButton";
 
 interface ContractDetailPageProps {
   params: { id: string };
@@ -125,9 +126,12 @@ export default async function ContractDetailPage({
               <p className="mb-2 text-xs font-black uppercase text-emerald-400">
                 Contract created. Share this link with your witness:
               </p>
-              <code className="block break-all text-sm text-emerald-300">
-                {acceptUrl}
-              </code>
+              <div className="flex items-start gap-2">
+                <code className="block flex-1 break-all text-sm text-emerald-300">
+                  {acceptUrl}
+                </code>
+              </div>
+              <CopyButton text={acceptUrl} />
               <p className="mt-2 text-xs text-zinc-400">
                 They must sign in with the email you used ({contract.partner_email}).
               </p>
@@ -159,7 +163,14 @@ export default async function ContractDetailPage({
             <p className="text-2xl font-black uppercase text-red-400">Contract Failed.</p>
             <p className="mt-1 text-sm uppercase text-zinc-400">Settle Your Debt:</p>
             <p className="mt-2 text-5xl font-black text-[#EFFF00]">₹{contract.penalty_amount}</p>
-            <p className="mt-3 text-[9px] uppercase tracking-widest text-zinc-500">Close the verdict immediately.</p>
+            <p className="mt-3 text-xs text-[#adaaad] uppercase tracking-widest">Settle directly with your partner.</p>
+            <a
+              href={`upi://pay?am=${contract.penalty_amount}&cu=INR&tn=VOW+Contract+Settlement`}
+              className="mt-4 inline-block w-full bg-[#f9f9f9] text-black font-bebas text-lg tracking-widest py-4 text-center uppercase"
+            >
+              Pay via UPI →
+            </a>
+            <p className="mt-2 text-[9px] text-[#adaaad]/60 uppercase tracking-widest text-center">Opens any UPI app on your device</p>
           </div>
         )}
       </div>
