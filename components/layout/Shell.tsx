@@ -64,6 +64,14 @@ export async function Shell({ children }: ShellProps) {
         </div>
       </header>
       <main className="mx-auto max-w-5xl">{children}</main>
+      <footer className="py-6 text-center">
+        <Link
+          href="/privacy"
+          className="text-[10px] uppercase tracking-widest text-zinc-600 hover:text-zinc-400"
+        >
+          Privacy Policy
+        </Link>
+      </footer>
     </div>
   );
 }
