@@ -17,7 +17,7 @@ export default async function AcceptContractPage({
   } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect(`/login?redirect=/contracts/${params.id}/accept`);
+    redirect(`/onboarding?redirect=/contracts/${params.id}/accept`);
   }
 
   const { data: contract } = await supabase

@@ -27,7 +27,9 @@ export default function OnboardingPage() {
         return;
       }
       if (localStorage.getItem("vow_onboarding_seen") === "true") {
-        router.replace("/signup");
+        const params = new URLSearchParams(window.location.search);
+        const redirectTo = params.get("redirect");
+        router.replace(redirectTo ? `/signup?redirect=${encodeURIComponent(redirectTo)}` : "/signup");
       } else {
         setReady(true);
       }
@@ -37,7 +39,13 @@ export default function OnboardingPage() {
 
   function finish() {
     localStorage.setItem("vow_onboarding_seen", "true");
-    router.push("/signup");
+    const params = new URLSearchParams(window.location.search);
+    const redirectTo = params.get("redirect");
+    if (redirectTo) {
+      router.push(`/signup?redirect=${encodeURIComponent(redirectTo)}`);
+    } else {
+      router.push("/signup");
+    }
   }
 
   function advance() {

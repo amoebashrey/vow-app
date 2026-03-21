@@ -6,6 +6,7 @@ import { createSupabaseServerClient } from '../../../lib/supabase/server';
 export async function signup(formData: FormData) {
   const email = String(formData.get('email') || '').trim();
   const password = String(formData.get('password') || '');
+  const display_name = String(formData.get('display_name') || '').trim();
   const redirectTo = String(formData.get('redirect') || '/dashboard');
 
   const supabase = createSupabaseServerClient();
@@ -18,6 +19,17 @@ export async function signup(formData: FormData) {
 
   if (error) {
     throw new Error(error.message);
+  }
+
+  // Write display_name to profiles table
+  if (data.user && display_name) {
+    await supabase
+      .from('profiles')
+      .upsert({
+        id: data.user.id,
+        display_name,
+        updated_at: new Date().toISOString()
+      });
   }
 
   // If email confirmation is ON, session is null – user must click link in email
