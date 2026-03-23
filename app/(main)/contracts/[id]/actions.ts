@@ -56,3 +56,27 @@ export async function resolveContract(
 
   redirect(`/contracts/${contractId}`);
 }
+
+export async function deleteContract(contractId: string) {
+  const supabase = createSupabaseServerClient();
+
+  const {
+    data: { user }
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    throw new Error('You must be signed in.');
+  }
+
+  const { error } = await supabase
+    .from('contracts')
+    .delete()
+    .eq('id', contractId)
+    .eq('creator_id', user.id);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  redirect('/dashboard');
+}

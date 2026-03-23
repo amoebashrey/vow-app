@@ -16,6 +16,23 @@ export function CreateContractForm() {
   const [isPending, startTransition] = useTransition();
   const [deadlinePreset, setDeadlinePreset] = useState<DeadlinePreset | null>(null);
   const [customDate, setCustomDate] = useState("");
+  const [partnerEmail, setPartnerEmail] = useState("");
+
+  const isContactsSupported = typeof navigator !== "undefined"
+    && "contacts" in navigator
+    && "ContactsManager" in (window as any);
+
+  const handlePickContact = async () => {
+    try {
+      const contacts = await (navigator as any).contacts.select(
+        ["name", "email"],
+        { multiple: false }
+      );
+      if (contacts.length && contacts[0].email?.length) {
+        setPartnerEmail(contacts[0].email[0]);
+      }
+    } catch { /* user cancelled */ }
+  };
 
   const presetDays: Record<Exclude<DeadlinePreset, "CUSTOM">, number> = {
     "1W": 7,
@@ -114,13 +131,31 @@ export function CreateContractForm() {
 
       {/* YOUR WITNESS */}
       <div>
-        <label className="block font-epilogue text-[10px] font-bold uppercase tracking-[0.2em] text-[#adaaad] mb-2">
-          Your Witness
-        </label>
+        <div className="flex items-center justify-between mb-2">
+          <label className="block font-epilogue text-[10px] font-bold uppercase tracking-[0.2em] text-[#adaaad]">
+            Your Witness
+          </label>
+          {isContactsSupported && (
+            <button
+              type="button"
+              onClick={handlePickContact}
+              className="w-11 h-11 flex items-center justify-center text-[#adaaad] hover:text-[#f9f9f9] transition-colors"
+              aria-label="Pick from contacts"
+            >
+              <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                <circle cx="10" cy="8" r="4" />
+                <path d="M2 20c0-4 3.6-7 8-7s8 3 8 7" />
+                <line x1="20" y1="8" x2="20" y2="14" /><line x1="17" y1="11" x2="23" y2="11" />
+              </svg>
+            </button>
+          )}
+        </div>
         <input
           type="email"
           name="partner_email"
           required
+          value={partnerEmail}
+          onChange={(e) => setPartnerEmail(e.target.value)}
           placeholder="witness@email.com"
           className="w-full bg-transparent border-0 border-b border-[#48474A] px-0 py-3 text-[#f9f9f9] text-sm outline-none focus:ring-0 focus:border-[#f9f9f9] transition-all placeholder:text-[#767577]/40"
         />

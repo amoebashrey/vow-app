@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "../../../../lib/supabase/server";
 import { ResolveContractForm } from "../../../../components/contracts/ResolveContractForm";
 import { CopyButton } from "../../../../components/ui/CopyButton";
+import { DeleteContractButton } from "../../../../components/contracts/DeleteContractButton";
 
 interface ContractDetailPageProps {
   params: { id: string };
@@ -165,8 +166,7 @@ export default async function ContractDetailPage({
             <span className="inline-block mt-2 px-2 py-0.5 font-epilogue text-[10px] uppercase tracking-widest rounded-[2px] border border-[#adaaad]/30 text-[#adaaad]">
               Awaiting Acceptance
             </span>
-            {searchParams.created === "1" && (
-              <div className="mt-4">
+            <div className="mt-4">
                 <p className="font-epilogue text-[10px] uppercase tracking-widest text-[#adaaad] mb-2">Share Link</p>
                 <code className="block text-xs text-[#adaaad]/70 break-all font-epilogue">{acceptUrl}</code>
                 <CopyButton text={acceptUrl} />
@@ -179,7 +179,6 @@ export default async function ContractDetailPage({
                   Share via WhatsApp →
                 </a>
               </div>
-            )}
           </>
         ) : (
           <div className="flex items-center gap-3">
@@ -187,7 +186,7 @@ export default async function ContractDetailPage({
               <span className="font-bebas text-sm text-[#deed00]">{partnerInitial}</span>
             </div>
             <div>
-              <p className="font-bebas text-lg text-[#f9f9f9]">{contract.partner_email}</p>
+              <p className="font-bebas text-lg text-[#f9f9f9]">{(contract.partner_email ?? "").split("@")[0].toUpperCase()}</p>
               <span className="px-2 py-0.5 font-epilogue text-[10px] uppercase tracking-widest rounded-[2px] border border-[#22c55e]/50 text-[#22c55e] bg-[#22c55e]/10">
                 Locked In
               </span>
@@ -219,6 +218,11 @@ export default async function ContractDetailPage({
           </a>
           <p className="font-epilogue text-[9px] text-[#adaaad]/50 uppercase tracking-widest text-center mt-2">Opens any UPI app on your device</p>
         </div>
+      )}
+
+      {/* Delete — creator only, pending acceptance only */}
+      {isCreator && pendingAcceptance && (
+        <DeleteContractButton contractId={contract.id} />
       )}
     </div>
   );

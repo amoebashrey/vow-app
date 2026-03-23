@@ -79,7 +79,6 @@ export function DashboardContent({ contracts }: { contracts: ContractItem[] }) {
     <div className="min-h-screen bg-[#09090B] pb-24">
       {/* Header */}
       <div className="px-4 pt-6 pb-4">
-        <p className="font-epilogue text-[10px] uppercase tracking-[0.3em] text-[#adaaad] mb-1">Sovereign Accountability</p>
         <h1 className="font-bebas text-5xl text-[#f9f9f9] uppercase">Your Vows.</h1>
       </div>
 
@@ -117,15 +116,15 @@ export function DashboardContent({ contracts }: { contracts: ContractItem[] }) {
             <>
               {/* Stat bar */}
               <div className="flex gap-3 py-4">
-                <div className="glass-card flex-1 p-4">
-                  <p className="font-epilogue text-[10px] uppercase tracking-widest text-[#adaaad]">Total at Stake</p>
+                <div className="glass-card flex-1 p-4 rounded-[8px]">
+                  <p className="font-epilogue text-[10px] uppercase tracking-widest text-[#adaaad]">At Stake</p>
                   <h4 className="font-bebas text-3xl text-[#deed00] leading-none mt-1">₹{totalAtStake.toLocaleString("en-IN")}</h4>
                 </div>
-                <div className="glass-card flex-1 p-4">
+                <div className="glass-card flex-1 p-4 rounded-[8px]">
                   <p className="font-epilogue text-[10px] uppercase tracking-widest text-[#adaaad]">Active</p>
                   <h4 className="font-bebas text-3xl text-[#f9f9f9] leading-none mt-1">{activeVows.length}</h4>
                 </div>
-                <div className="glass-card flex-1 p-4">
+                <div className="glass-card flex-1 p-4 rounded-[8px]">
                   <p className="font-epilogue text-[10px] uppercase tracking-widest text-[#adaaad]">Success Rate</p>
                   <h4 className="font-bebas text-3xl text-[#f9f9f9] leading-none mt-1">{successRate}%</h4>
                 </div>
@@ -143,24 +142,24 @@ export function DashboardContent({ contracts }: { contracts: ContractItem[] }) {
                       className={`glass-card p-5 rounded-[8px] cursor-pointer transition-all hover:border-[rgba(72,71,74,0.4)] ${isOverdue ? "border-l-[3px] border-[#FF3E00]" : ""}`}
                       onClick={() => router.push(`/contracts/${contract.id}`)}
                     >
-                      {isOverdue && (
-                        <div className="flex justify-end mb-2">
-                          <span className="px-2 py-0.5 font-epilogue text-[10px] uppercase tracking-widest rounded-[2px] bg-[#FF3E00] text-white">Overdue</span>
-                        </div>
-                      )}
-                      <h3 className="font-bebas text-xl text-[#f9f9f9] leading-tight line-clamp-2">{contract.goal_text}</h3>
+                      <div className="flex items-start justify-between gap-2">
+                        <h3 className="font-bebas text-xl text-[#f9f9f9] leading-tight line-clamp-2 flex-1">{contract.goal_text}</h3>
+                        {isOverdue && (
+                          <span className="px-2 py-0.5 font-epilogue text-[10px] uppercase tracking-widest rounded-[2px] bg-[#FF3E00] text-white shrink-0">Overdue</span>
+                        )}
+                      </div>
                       <div className="flex items-end justify-between mt-3">
                         <div>
                           <p className="font-epilogue text-[10px] uppercase tracking-widest text-[#adaaad]">Penalty</p>
                           <p className="font-bebas text-2xl text-[#deed00] leading-none">₹{contract.penalty_amount.toLocaleString("en-IN")}</p>
                         </div>
-                        <p className="font-bebas text-sm text-[#f9f9f9]">{isOverdue ? "Overdue" : `${days} Days Left`}</p>
+                        {!isOverdue && <p className="font-bebas text-sm text-[#f9f9f9]">{days} Days Left</p>}
                       </div>
                       <div className="flex items-center gap-2 mt-3">
                         <div className="w-6 h-6 rounded-full bg-[rgba(38,37,40,0.8)] border border-[#48474A]/30 flex items-center justify-center">
                           <span className="font-bebas text-[10px] text-[#deed00]">{partnerInitial}</span>
                         </div>
-                        <span className="font-epilogue text-xs text-[#adaaad]">Watched by {contract.partner_email ?? "partner"}</span>
+                        <span className="font-epilogue text-xs text-[#adaaad]">Watched by {(contract.partner_email ?? "partner").split("@")[0].toUpperCase()}</span>
                       </div>
                     </div>
                   );
