@@ -108,7 +108,7 @@ export default async function ContractDetailPage({
 
         {contract.status === "failed" && (
           <div className="p-5 rounded-[8px] bg-[rgba(255,62,0,0.12)] border border-[#FF3E00]/30">
-            <p className="font-bebas text-2xl text-[#f9f9f9]">Vow Failed.</p>
+            <p className="font-bebas text-2xl text-[#f9f9f9]">Vow Failed</p>
             <p className="font-epilogue text-sm text-[#adaaad] mt-1">₹{contract.penalty_amount.toLocaleString("en-IN")} is owed to you.</p>
             <a
               href={`upi://pay?am=${contract.penalty_amount}&cu=INR&tn=VOW+Contract+Settlement`}
@@ -198,7 +198,7 @@ export default async function ContractDetailPage({
       {/* Resolve section */}
       {canResolve && (
         <div className="mt-6">
-          <p className="font-bebas text-xl tracking-widest text-[#f9f9f9] mb-4">The Verdict.</p>
+          <p className="font-bebas text-xl tracking-widest text-[#f9f9f9] mb-4">The Verdict</p>
           <ResolveContractForm contractId={contract.id} />
           <p className="font-epilogue text-[10px] text-[#adaaad]/50 uppercase tracking-widest text-center mt-3">This action is irreversible.</p>
         </div>
@@ -207,7 +207,7 @@ export default async function ContractDetailPage({
       {/* Failed state */}
       {contract.status === "failed" && (
         <div className="mt-6 p-5 rounded-[8px] bg-[rgba(255,62,0,0.08)] border border-[#FF3E00]/20">
-          <p className="font-epilogue text-[10px] uppercase tracking-widest text-[#adaaad]">Vow Failed.</p>
+          <p className="font-epilogue text-[10px] uppercase tracking-widest text-[#adaaad]">Vow Failed</p>
           <p className="font-bebas text-5xl text-[#deed00] leading-none mt-1">₹{contract.penalty_amount.toLocaleString("en-IN")}</p>
           <p className="font-epilogue text-xs text-[#adaaad] mt-2">Settle directly with your partner.</p>
           <a

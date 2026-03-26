@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 interface ContractItem {
@@ -60,6 +60,10 @@ export function DashboardContent({ contracts }: { contracts: ContractItem[] }) {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<"vows" | "stakes">("vows");
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, []);
+
   const myVows = contracts.filter((c) => c.role === "creator");
   const stakes = contracts.filter((c) => c.role === "partner");
 
@@ -79,7 +83,7 @@ export function DashboardContent({ contracts }: { contracts: ContractItem[] }) {
     <div className="min-h-screen bg-[#09090B] pb-24">
       {/* Header */}
       <div className="px-4 pt-6 pb-4">
-        <h1 className="font-bebas text-5xl text-[#f9f9f9] uppercase">Your Vows.</h1>
+        <h1 className="font-bebas text-5xl text-[#f9f9f9] uppercase">Your Vows</h1>
       </div>
 
       {/* Tabs */}
@@ -103,13 +107,13 @@ export function DashboardContent({ contracts }: { contracts: ContractItem[] }) {
         <div className="px-4 pt-4">
           {activeVows.length === 0 && pastVows.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-16 px-8 text-center">
-              <h3 className="font-bebas text-4xl text-[#adaaad]">No Active Vows.</h3>
-              <p className="font-epilogue text-sm text-[#adaaad]/60 mt-2">Make one.</p>
+              <h3 className="font-bebas text-4xl text-[#adaaad]">No Active Vows</h3>
+              <p className="font-epilogue text-sm text-[#adaaad]/60 mt-2">Make one</p>
               <button
                 onClick={() => router.push("/contracts/new")}
                 className="mt-8 w-full bg-[#f9f9f9] text-[#09090B] font-bebas text-xl tracking-[0.15em] py-4 uppercase active:scale-[0.98] transition-all"
               >
-                Make One.
+                Make One
               </button>
             </div>
           ) : (
@@ -178,7 +182,7 @@ export function DashboardContent({ contracts }: { contracts: ContractItem[] }) {
         <div className="px-4 pt-4">
           {stakes.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-16 px-8 text-center">
-              <h3 className="font-bebas text-4xl text-[#adaaad]">No Stakes Yet.</h3>
+              <h3 className="font-bebas text-4xl text-[#adaaad]">No Stakes Yet</h3>
               <p className="font-epilogue text-sm text-[#adaaad]/60 mt-2 max-w-xs">When someone names you as their witness, it appears here.</p>
             </div>
           ) : (

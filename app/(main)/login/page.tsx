@@ -67,7 +67,7 @@ export default function LoginPage() {
           <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-white/5 blur-[60px] pointer-events-none rounded-full" />
 
           <header className="mb-5 md:mb-8 text-center">
-            <h2 className="font-bebas text-5xl tracking-[0.1em] text-[#f9f9f9] leading-none">ENTER THE VOW.</h2>
+            <h2 className="font-bebas text-5xl tracking-[0.1em] text-[#f9f9f9] leading-none">ENTER THE VOW</h2>
             <p className="font-epilogue text-xs tracking-widest text-[#adaaad] mt-3 uppercase">Access your accountability ledger.</p>
           </header>
 
@@ -135,9 +135,9 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isPending}
-              className="w-full bg-[#f9f9f9] text-black font-bebas text-xl tracking-[0.15em] py-4 uppercase active:scale-[0.98] transition-all hover:shadow-[0_0_20px_rgba(249,249,249,0.3)] disabled:opacity-60"
+              className="w-full bg-[#f9f9f9] text-black font-bebas text-xl tracking-[0.15em] py-3 md:py-4 uppercase active:scale-[0.98] transition-all hover:shadow-[0_0_20px_rgba(249,249,249,0.3)] disabled:opacity-60"
             >
-              {isPending ? "Entering..." : "Enter."}
+              {isPending ? "Entering..." : "Enter"}
             </button>
           </form>
         </div>

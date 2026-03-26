@@ -17,20 +17,13 @@ export async function acceptContract(contractId: string) {
   const { data: contract, error: contractError } = await supabase
     .from('contracts')
     .select(
-      'id, partner_email, contract_participants ( id, role, accepted, user_id )'
+      'id, contract_participants ( id, role, accepted, user_id )'
     )
     .eq('id', contractId)
     .single();
 
   if (contractError || !contract) {
     throw new Error(contractError?.message ?? 'Contract not found.');
-  }
-
-  const userEmail = (user.email || '').toLowerCase();
-  const partnerEmail = (contract.partner_email || '').toLowerCase();
-
-  if (!userEmail || userEmail !== partnerEmail) {
-    throw new Error('not_partner');
   }
 
   const partnerParticipant =

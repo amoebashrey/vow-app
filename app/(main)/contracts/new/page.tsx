@@ -15,7 +15,7 @@ export default async function NewContractPage() {
   return (
     <div className="min-h-screen px-4 py-4 md:py-8 pb-24">
       <div className="mx-auto max-w-lg">
-        <h1 className="font-bebas mb-2 text-4xl md:text-6xl uppercase leading-none">New Vow.</h1>
+        <h1 className="font-bebas mb-2 text-4xl md:text-6xl uppercase leading-none">New Vow</h1>
         <p className="font-epilogue mb-4 md:mb-8 text-sm uppercase tracking-widest text-[#adaaad] opacity-70">
           Set the terms. Lock them in.
         </p>

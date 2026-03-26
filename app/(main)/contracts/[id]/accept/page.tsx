@@ -23,21 +23,22 @@ export default async function AcceptContractPage({
   const { data: contract } = await supabase
     .from("contracts")
     .select(
-      "id, goal_text, partner_email, contract_participants ( role, accepted )"
+      "id, goal_text, status, contract_participants ( role, accepted )"
     )
     .eq("id", params.id)
     .single();
 
-  const userEmail = (user.email || "").toLowerCase();
-  const partnerEmail = (contract?.partner_email || "").toLowerCase();
-  const isPartner = !!userEmail && userEmail === partnerEmail;
+  if (!contract) {
+    redirect("/dashboard");
+  }
 
   const partnerParticipant =
-    contract?.contract_participants?.find(
+    contract.contract_participants?.find(
       (p: any) => p.role === "partner"
     ) ?? null;
 
   const alreadyAccepted = partnerParticipant?.accepted;
+  const isInactive = contract.status !== "active";
 
   return (
     <div className="min-h-screen px-4 py-10">
@@ -45,40 +46,34 @@ export default async function AcceptContractPage({
         <h1 className="mb-2 text-2xl font-black uppercase tracking-[0.2em]">
           Accept Contract
         </h1>
-        {contract ? (
-          <>
-            <p className="mb-6 text-sm text-zinc-300">
-              Your partner has drawn a line. Read it carefully, then decide.
-            </p>
-            <div className="mb-6 border border-dashed border-zinc-700 p-4 text-sm text-zinc-200">
-              <p className="mb-1 text-xs font-semibold uppercase text-zinc-500">
-                Commitment
-              </p>
-              <p>{contract.goal_text}</p>
-            </div>
-            {!isPartner && (
-              <p className="text-xs font-semibold uppercase text-red-400">
-                You are not the partner on this contract.
-              </p>
-            )}
-            {isPartner && alreadyAccepted && (
-              <p className="text-xs font-semibold uppercase text-emerald-400">
-                You have already accepted this contract.
-              </p>
-            )}
-            {isPartner && !alreadyAccepted && searchParams.accepted === "1" && (
-              <p className="text-xs font-semibold uppercase text-emerald-400">
-                Contract accepted. Hold them to it.
-              </p>
-            )}
-            {isPartner && !alreadyAccepted && searchParams.accepted !== "1" && (
-              <div className="mt-6">
-                <AcceptContractForm contractId={contract.id} />
-              </div>
-            )}
-          </>
-        ) : (
-          <p className="text-sm text-red-400">Contract not found.</p>
+        <p className="mb-6 text-sm text-zinc-300">
+          Your partner has drawn a line. Read it carefully, then decide.
+        </p>
+        <div className="mb-6 border border-dashed border-zinc-700 p-4 text-sm text-zinc-200">
+          <p className="mb-1 text-xs font-semibold uppercase text-zinc-500">
+            Commitment
+          </p>
+          <p>{contract.goal_text}</p>
+        </div>
+        {isInactive && (
+          <p className="text-xs font-semibold uppercase text-red-400">
+            This vow is no longer active
+          </p>
+        )}
+        {!isInactive && alreadyAccepted && (
+          <p className="text-xs font-semibold uppercase text-emerald-400">
+            You have already accepted this vow
+          </p>
+        )}
+        {!isInactive && !alreadyAccepted && searchParams.accepted === "1" && (
+          <p className="text-xs font-semibold uppercase text-emerald-400">
+            Contract accepted. Hold them to it.
+          </p>
+        )}
+        {!isInactive && !alreadyAccepted && searchParams.accepted !== "1" && (
+          <div className="mt-6">
+            <AcceptContractForm contractId={contract.id} />
+          </div>
         )}
       </div>
     </div>

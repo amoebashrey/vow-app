@@ -29,7 +29,12 @@ export async function middleware(request: NextRequest) {
     }
   );
 
-  await supabase.auth.getUser();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  // Unauthenticated users at "/" go to onboarding (client-side handles localStorage skip)
+  if (!user && request.nextUrl.pathname === '/') {
+    return NextResponse.redirect(new URL('/onboarding', request.url));
+  }
 
   return response;
 }

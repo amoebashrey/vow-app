@@ -13,6 +13,10 @@ export async function createContract(formData: FormData) {
     throw new Error('All fields are required.');
   }
 
+  if (!partnerEmail.includes('@')) {
+    throw new Error('Please enter a valid email address for your witness.');
+  }
+
   const penaltyAmount = Number(penaltyRaw);
   if (!Number.isFinite(penaltyAmount) || penaltyAmount <= 0) {
     throw new Error('Penalty must be a positive number.');

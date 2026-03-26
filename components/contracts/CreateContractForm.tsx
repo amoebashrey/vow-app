@@ -171,7 +171,7 @@ export function CreateContractForm() {
         disabled={isPending}
         className="w-full bg-[#f9f9f9] text-[#09090B] font-bebas text-xl tracking-[0.15em] py-4 uppercase active:scale-[0.98] transition-all hover:shadow-[0_0_20px_rgba(249,249,249,0.3)] disabled:opacity-60"
       >
-        {isPending ? "Sealing..." : "Seal the Vow."}
+        {isPending ? "Sealing..." : "Seal the Vow"}
       </button>
       <p className="font-epilogue text-[10px] text-[#adaaad]/50 uppercase tracking-widest text-center">
         Once sealed, terms cannot be changed.
