@@ -23,7 +23,8 @@ export async function login(formData: FormData) {
     throw new Error(error.message);
   }
 
-  redirect(redirectTo || '/dashboard');
+  const safeRedirect = (redirectTo?.startsWith('/') && !redirectTo?.startsWith('//')) ? redirectTo : '/dashboard';
+  redirect(safeRedirect);
 }
 
 /**

@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "../../../lib/supabase/server";
 import { DashboardContent } from "../../../components/dashboard/DashboardContent";
+import { PushSubscribeButton } from "../../../components/ui/PushSubscribeButton";
 
 export default async function DashboardPage() {
   const supabase = createSupabaseServerClient();
@@ -43,5 +44,10 @@ export default async function DashboardPage() {
         };
       }) ?? [];
 
-  return <DashboardContent contracts={contracts} />;
+  return (
+    <>
+      <PushSubscribeButton />
+      <DashboardContent contracts={contracts} />
+    </>
+  );
 }

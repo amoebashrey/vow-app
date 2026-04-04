@@ -14,7 +14,8 @@ import { NextResponse } from 'next/server';
 export async function GET(request: Request) {
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get('code');
-  const next = requestUrl.searchParams.get('next') ?? '/dashboard';
+  const nextParam = requestUrl.searchParams.get('next') ?? '/dashboard';
+  const next = (nextParam.startsWith('/') && !nextParam.startsWith('//')) ? nextParam : '/dashboard';
 
   if (code) {
     const cookieStore = cookies();

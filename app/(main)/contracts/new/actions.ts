@@ -75,7 +75,8 @@ export async function createContract(formData: FormData) {
     ]);
 
   if (participantsError) {
-    throw new Error(participantsError.message);
+    await supabase.from('contracts').delete().eq('id', contract.id);
+    throw new Error('Failed to create contract. Please try again.');
   }
 
   redirect(`/contracts/${contract.id}?created=1`);

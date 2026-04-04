@@ -14,7 +14,7 @@ export async function signup(formData: FormData) {
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
-    options: { emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/auth/callback?next=${encodeURIComponent(redirectTo)}` }
+    options: { emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/auth/callback?next=${encodeURIComponent((redirectTo?.startsWith('/') && !redirectTo?.startsWith('//')) ? redirectTo : '/dashboard')}` }
   });
 
   if (error) {
@@ -37,5 +37,6 @@ export async function signup(formData: FormData) {
     redirect(`/login?message=confirm_email&email=${encodeURIComponent(email)}`);
   }
 
-  redirect(redirectTo || '/dashboard');
+  const safeRedirect = (redirectTo?.startsWith('/') && !redirectTo?.startsWith('//')) ? redirectTo : '/dashboard';
+  redirect(safeRedirect);
 }

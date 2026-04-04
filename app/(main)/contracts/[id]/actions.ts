@@ -41,6 +41,14 @@ export async function resolveContract(
   }
 
   const participants = contract.contract_participants || [];
+
+  const isCreator = participants.some(
+    (p: any) => p.role === 'creator' && p.user_id === user.id
+  );
+  if (!isCreator) {
+    throw new Error('Only the creator can resolve this contract.');
+  }
+
   const allAccepted = participants.every((p: any) => p.accepted);
   if (!allAccepted) {
     throw new Error('Both participants must accept before resolving.');
@@ -49,7 +57,8 @@ export async function resolveContract(
   const { error: updateError } = await supabase
     .from('contracts')
     .update({ status: outcome })
-    .eq('id', contractId);
+    .eq('id', contractId)
+    .eq('status', 'active');
 
   if (updateError) {
     throw new Error(updateError.message);
