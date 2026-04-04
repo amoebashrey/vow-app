@@ -8,7 +8,7 @@ interface ContractItem {
   goal_text: string;
   deadline: string;
   penalty_amount: number;
-  status: "active" | "completed" | "failed";
+  status: "active" | "completed" | "failed" | "settled";
   partner_email?: string;
   partner_name?: string;
   role: "creator" | "partner";
@@ -38,16 +38,16 @@ function PastVowsToggle({ items, label }: { items: ContractItem[]; label: string
           {items.map((v) => (
             <div
               key={v.id}
-              className={`glass-card p-4 rounded-[8px] flex items-center justify-between border-l-2 ${v.status === "completed" ? "border-[#22c55e]" : "border-[#FF3E00]"}`}
+              className={`glass-card p-4 rounded-[8px] flex items-center justify-between border-l-2 ${v.status === "completed" ? "border-[#22c55e]" : v.status === "settled" ? "border-[#adaaad]/30" : "border-[#FF3E00]"}`}
             >
               <div>
                 <p className="font-bebas text-base text-[#f9f9f9] line-clamp-1">{v.goal_text}</p>
                 <p className="font-epilogue text-[10px] text-[#adaaad]">{new Date(v.deadline).toLocaleDateString()}</p>
               </div>
               <span
-                className={`px-2 py-0.5 font-epilogue text-[10px] uppercase tracking-widest rounded-[2px] ${v.status === "completed" ? "border border-[#22c55e]/50 text-[#22c55e] bg-[#22c55e]/10" : "bg-[#FF3E00]/15 text-[#FF3E00] border border-[#FF3E00]/30"}`}
+                className={`px-2 py-0.5 font-epilogue text-[10px] uppercase tracking-widest rounded-[2px] ${v.status === "completed" ? "border border-[#22c55e]/50 text-[#22c55e] bg-[#22c55e]/10" : v.status === "settled" ? "border border-[#adaaad]/30 text-[#adaaad]/60" : "bg-[#FF3E00]/15 text-[#FF3E00] border border-[#FF3E00]/30"}`}
               >
-                {v.status === "completed" ? "KEPT" : "FAILED"}
+                {v.status === "completed" ? "KEPT" : v.status === "settled" ? "SETTLED" : "FAILED"}
               </span>
             </div>
           ))}
@@ -70,7 +70,7 @@ export function DashboardContent({ contracts }: { contracts: ContractItem[] }) {
 
   // My Vows stats
   const activeVows = myVows.filter((c) => c.status === "active");
-  const pastVows = myVows.filter((c) => c.status === "completed" || c.status === "failed");
+  const pastVows = myVows.filter((c) => c.status === "completed" || c.status === "failed" || c.status === "settled");
   const totalAtStake = activeVows.reduce((sum, c) => sum + c.penalty_amount, 0);
   const resolved = pastVows.length;
   const kept = myVows.filter((c) => c.status === "completed").length;
@@ -78,7 +78,7 @@ export function DashboardContent({ contracts }: { contracts: ContractItem[] }) {
 
   // Stakes
   const activeStakes = stakes.filter((c) => c.status === "active");
-  const pastStakes = stakes.filter((c) => c.status === "completed" || c.status === "failed");
+  const pastStakes = stakes.filter((c) => c.status === "completed" || c.status === "failed" || c.status === "settled");
 
   return (
     <div className="min-h-screen bg-[#09090B] pb-24">
@@ -229,7 +229,7 @@ export function DashboardContent({ contracts }: { contracts: ContractItem[] }) {
                 ))}
               </div>
 
-              <PastVowsToggle items={pastStakes.filter((c) => c.status === "completed")} label="Past Stakes" />
+              <PastVowsToggle items={pastStakes.filter((c) => c.status === "completed" || c.status === "settled")} label="Past Stakes" />
             </>
           )}
         </div>
