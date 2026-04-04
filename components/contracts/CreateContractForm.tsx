@@ -17,6 +17,7 @@ export function CreateContractForm() {
   const [deadlinePreset, setDeadlinePreset] = useState<DeadlinePreset | null>(null);
   const [customDate, setCustomDate] = useState("");
   const [partnerEmail, setPartnerEmail] = useState("");
+  const [goalText, setGoalText] = useState("");
 
   const isContactsSupported = typeof navigator !== "undefined"
     && "contacts" in navigator
@@ -77,10 +78,14 @@ export function CreateContractForm() {
         <textarea
           name="goal_text"
           required
+          maxLength={500}
+          value={goalText}
+          onChange={(e) => setGoalText(e.target.value)}
           className="w-full bg-transparent border-0 border-b border-[#48474A] px-0 py-3 text-[#f9f9f9] text-sm outline-none focus:ring-0 focus:border-[#f9f9f9] transition-all placeholder:text-[#767577]/40"
           rows={3}
           placeholder="I VOW TO..."
         />
+        <p className="font-epilogue text-[10px] text-[#adaaad]/40 text-right mt-1">{goalText.length}/500</p>
       </div>
 
       {/* THE DEADLINE */}

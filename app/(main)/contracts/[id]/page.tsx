@@ -4,6 +4,7 @@ import { createSupabaseServerClient } from "../../../../lib/supabase/server";
 import { ResolveContractForm } from "../../../../components/contracts/ResolveContractForm";
 import { CopyButton } from "../../../../components/ui/CopyButton";
 import { DeleteContractButton } from "../../../../components/contracts/DeleteContractButton";
+import { MarkAsSettledButton } from "../../../../components/contracts/MarkAsSettledButton";
 
 interface ContractDetailPageProps {
   params: { id: string };
@@ -79,6 +80,7 @@ export default async function ContractDetailPage({
     active: { text: "Active", cls: "border border-[#22c55e]/50 text-[#22c55e] bg-[#22c55e]/10" },
     completed: { text: "Kept", cls: "border border-[#22c55e]/50 text-[#22c55e] bg-[#22c55e]/10" },
     failed: { text: "Failed", cls: "bg-[#FF3E00]/15 text-[#FF3E00] border border-[#FF3E00]/30" },
+    settled: { text: "Settled", cls: "border border-[#adaaad]/30 text-[#adaaad]/60" },
   };
   const { text: statusText, cls: statusPillClass } = statusMap[contract.status] ?? statusMap.active;
 
@@ -125,9 +127,7 @@ export default async function ContractDetailPage({
             >
               Collect via UPI →
             </a>
-            <button className="mt-3 w-full font-epilogue text-sm text-[#adaaad] hover:text-[#f9f9f9] transition-colors py-2">
-              Mark as Settled
-            </button>
+            <MarkAsSettledButton contractId={contract.id} />
           </div>
         )}
       </div>

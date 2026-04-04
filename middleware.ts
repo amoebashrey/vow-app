@@ -31,9 +31,18 @@ export async function middleware(request: NextRequest) {
 
   const { data: { user } } = await supabase.auth.getUser();
 
+  const pathname = request.nextUrl.pathname;
+
   // Unauthenticated users at "/" go to onboarding (client-side handles localStorage skip)
-  if (!user && request.nextUrl.pathname === '/') {
+  if (!user && pathname === '/') {
     return NextResponse.redirect(new URL('/onboarding', request.url));
+  }
+
+  // Session expired: user has auth cookies but getUser() returns null on protected routes
+  const hasAuthCookie = request.cookies.getAll().some(c => c.name.startsWith('sb-'));
+  const isProtectedRoute = pathname.startsWith('/dashboard') || pathname.startsWith('/contracts') || pathname.startsWith('/profile');
+  if (!user && hasAuthCookie && isProtectedRoute) {
+    return NextResponse.redirect(new URL('/login?reason=session_expired', request.url));
   }
 
   return response;

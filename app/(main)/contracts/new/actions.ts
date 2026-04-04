@@ -13,13 +13,17 @@ export async function createContract(formData: FormData) {
     throw new Error('All fields are required.');
   }
 
-  if (!partnerEmail.includes('@')) {
-    throw new Error('Please enter a valid email address for your witness.');
+  if (goalText.length > 500) {
+    throw new Error('Vow must be 500 characters or fewer.');
+  }
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(partnerEmail)) {
+    throw new Error('Enter a valid email address.');
   }
 
   const penaltyAmount = Number(penaltyRaw);
-  if (!Number.isFinite(penaltyAmount) || penaltyAmount <= 0) {
-    throw new Error('Penalty must be a positive number.');
+  if (!Number.isFinite(penaltyAmount) || penaltyAmount <= 0 || penaltyAmount > 1000000) {
+    throw new Error('Penalty must be between ₹1 and ₹10,00,000.');
   }
 
   const today = new Date();

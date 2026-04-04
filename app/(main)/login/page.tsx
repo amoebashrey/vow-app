@@ -9,6 +9,8 @@ export default function LoginPage() {
   const searchParams = useSearchParams();
   const redirectTo = searchParams.get("redirect") ?? "/dashboard";
   const message = searchParams.get("message");
+  const reason = searchParams.get("reason");
+  const [showExpired, setShowExpired] = useState(reason === "session_expired");
   const emailParam = searchParams.get("email") ?? "";
   const [error, setError] = useState<string | null>(null);
   const [resendSuccess, setResendSuccess] = useState(false);
@@ -104,6 +106,12 @@ export default function LoginPage() {
               Your vows are private. Your commitments are binding.
             </p>
 
+            {showExpired && (
+              <div className="flex items-center justify-between">
+                <p className="font-epilogue text-xs text-[#adaaad]">Your session expired. Please log in again.</p>
+                <button type="button" onClick={() => setShowExpired(false)} className="text-[#adaaad] text-xs ml-2">✕</button>
+              </div>
+            )}
             {message === "confirm_email" && (
               <p className="text-xs font-semibold uppercase text-emerald-400">
                 Check your email and click the confirmation link to sign in.

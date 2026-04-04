@@ -219,7 +219,10 @@ export function DashboardContent({ contracts }: { contracts: ContractItem[] }) {
                       <span className="font-epilogue text-sm text-[#adaaad]">{new Date(contract.deadline).toLocaleDateString()}</span>
                       <span className="px-2 py-0.5 font-epilogue text-[10px] uppercase tracking-widest rounded-[2px] bg-[#FF3E00] text-white">Failed</span>
                     </div>
-                    <button className="mt-4 w-full bg-[#f9f9f9] text-[#09090B] font-bebas text-lg tracking-widest py-3 uppercase active:scale-[0.98] transition-all">
+                    <button
+                      onClick={() => router.push(`/contracts/${contract.id}`)}
+                      className="mt-4 w-full bg-[#f9f9f9] text-[#09090B] font-bebas text-lg tracking-widest py-3 uppercase active:scale-[0.98] transition-all"
+                    >
                       Mark as Settled
                     </button>
                   </div>
