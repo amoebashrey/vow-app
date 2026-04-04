@@ -26,7 +26,7 @@ export default async function ContractDetailPage({
   const { data: contract } = await supabase
     .from("contracts")
     .select(
-      "id, goal_text, deadline, penalty_amount, status, partner_email, creator_id, contract_participants ( role, accepted, user_id )"
+      "id, goal_text, deadline, penalty_amount, status, partner_email, creator_id, contract_participants ( role, accepted, user_id, profiles ( display_name ) )"
     )
     .eq("id", params.id)
     .single();
@@ -44,7 +44,16 @@ export default async function ContractDetailPage({
   const isCreator = currentUserParticipant?.role === "creator";
   const isPartner = currentUserParticipant?.role === "partner";
   const partner = participants.find((p: any) => p.role === "partner");
+  const creator = participants.find((p: any) => p.role === "creator");
   const allAccepted = participants.every((p: any) => p.accepted);
+
+  const emailPrefix = (contract.partner_email ?? "partner").split("@")[0];
+  const partnerProfiles: any = partner?.profiles;
+  const partnerDisplayName = Array.isArray(partnerProfiles) ? partnerProfiles[0]?.display_name : partnerProfiles?.display_name;
+  const partnerName = partnerDisplayName || (emailPrefix.charAt(0).toUpperCase() + emailPrefix.slice(1));
+  const creatorProfiles: any = creator?.profiles;
+  const creatorDisplayName = Array.isArray(creatorProfiles) ? creatorProfiles[0]?.display_name : creatorProfiles?.display_name;
+  const creatorName = creatorDisplayName || "Creator";
 
   const today = new Date();
   const deadlineDate = new Date(contract.deadline as string);
@@ -54,7 +63,7 @@ export default async function ContractDetailPage({
   );
   const isOverdue = daysRemaining <= 0;
   const formattedDeadline = deadlineDate.toLocaleDateString();
-  const partnerInitial = (contract.partner_email ?? "?")[0].toUpperCase();
+  const partnerInitial = partnerName[0].toUpperCase();
 
   const pendingAcceptance = partner && !partner.accepted;
   const canResolve = contract.status === "active" && isOverdue && allAccepted;
@@ -100,9 +109,9 @@ export default async function ContractDetailPage({
           <p className="font-epilogue text-[10px] uppercase tracking-widest text-[#adaaad] mb-3">Creator</p>
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-[rgba(38,37,40,0.8)] border border-[#48474A]/30 flex items-center justify-center">
-              <span className="font-bebas text-sm text-[#deed00]">C</span>
+              <span className="font-bebas text-sm text-[#deed00]">{creatorName[0].toUpperCase()}</span>
             </div>
-            <p className="font-bebas text-lg text-[#f9f9f9]">{contract.partner_email ? "Creator" : "Unknown"}</p>
+            <p className="font-bebas text-lg text-[#f9f9f9]">{creatorName}</p>
           </div>
         </div>
 
@@ -186,7 +195,7 @@ export default async function ContractDetailPage({
               <span className="font-bebas text-sm text-[#deed00]">{partnerInitial}</span>
             </div>
             <div>
-              <p className="font-bebas text-lg text-[#f9f9f9]">{(contract.partner_email ?? "").split("@")[0].toUpperCase()}</p>
+              <p className="font-bebas text-lg text-[#f9f9f9]">{partnerName}</p>
               <span className="px-2 py-0.5 font-epilogue text-[10px] uppercase tracking-widest rounded-[2px] border border-[#22c55e]/50 text-[#22c55e] bg-[#22c55e]/10">
                 Locked In
               </span>

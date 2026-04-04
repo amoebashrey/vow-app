@@ -10,6 +10,7 @@ interface ContractItem {
   penalty_amount: number;
   status: "active" | "completed" | "failed";
   partner_email?: string;
+  partner_name?: string;
   role: "creator" | "partner";
 }
 
@@ -139,7 +140,7 @@ export function DashboardContent({ contracts }: { contracts: ContractItem[] }) {
                 {activeVows.map((contract) => {
                   const days = daysRemaining(contract.deadline);
                   const isOverdue = days <= 0;
-                  const partnerInitial = (contract.partner_email ?? "?")[0].toUpperCase();
+                  const partnerInitial = (contract.partner_name ?? contract.partner_email ?? "?")[0].toUpperCase();
                   return (
                     <div
                       key={contract.id}
@@ -163,7 +164,7 @@ export function DashboardContent({ contracts }: { contracts: ContractItem[] }) {
                         <div className="w-6 h-6 rounded-full bg-[rgba(38,37,40,0.8)] border border-[#48474A]/30 flex items-center justify-center">
                           <span className="font-bebas text-[10px] text-[#deed00]">{partnerInitial}</span>
                         </div>
-                        <span className="font-epilogue text-xs text-[#adaaad]">Watched by {(contract.partner_email ?? "partner").split("@")[0].toUpperCase()}</span>
+                        <span className="font-epilogue text-xs text-[#adaaad]">Watched by {contract.partner_name ?? (contract.partner_email ?? "partner").split("@")[0]}</span>
                       </div>
                     </div>
                   );
